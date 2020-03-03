@@ -15,7 +15,7 @@ Clone the project. Visit https://www.foundertype.com/ , download `FZZJ-WXCZTJW.T
 - [ ] Custom letter space
 - [ ] Support more papers
 - [ ] Support more fonts
-- [ ] Blur effect
+- [ ] Text location randomness
 
 ## LICENSE
 

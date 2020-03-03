@@ -92,6 +92,7 @@ async function generate(
     ctx.font = fontRep;
     ctx.fillStyle = "black";
     ctx.textBaseline = "bottom";
+    ctx.filter = "blur(0.6px) opacity(85%) drop-shadow(1px 1px 1px #555)";
 
     let consumed = 0;
     for (
