@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>不想写字 - I just don't want to write!</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -35,15 +36,19 @@
             <option value="A5-photo-line-vertival" selected>A5-photo-line-vertival</option>
           </select>
         </div>
+      </div>
+      <div class="form-row">
         <div class="form-group col">
           <label>Letter space (in developing)</label>
           <input type="text" name="letterSpace" class="form-control" value="10">
         </div>
-      </div>
-      <div class="form-row">
         <div class="form-group col">
-          <label>Left random bias</label>
+          <label>Left align bias</label>
           <input type="text" name="leftBias" class="form-control" value="0.008">
+        </div>
+        <div class="form-group col">
+          <label>Paper max random slope angle</label>
+          <input type="text" name="paperSlope" class="form-control" value="2">
         </div>
       </div>
       <button type="submit" class="btn btn-primary btn-lg mr-2">Generate</button>
