@@ -1,79 +1,110 @@
-const paperConfig = {
-  A4: {
-    vertical: {
-      width: 210,
-      height: 297,
-      line_count: 23,
-      line_height: 0.03703,
-      line_width: 0.88762,
-      start: {
-        x: 0.05611,
-        y: 0.09289
-      }
-    },
-    horizontal: {
-      width: 297,
-      height: 210
-    }
-  },
-  A3: {
-    vertical: {},
-    horizontal: {}
-  }
-};
+import paperConfig from "./papers/config.js";
+
+// current paper config
+let currentConfig;
 
 window.onload = () => {
   document.querySelector("#generatorForm").addEventListener("submit", e => {
     e.preventDefault();
-    generate(
-      e.target["text"].value,
-      e.target["font"].value,
-      e.target["fontSize"].value,
-      e.target["paper"].value,
-      e.target["direction"].value,
-      e.target["wordsPerLine"].value,
-      e.target["bgColor"].value
-    );
+    if (e.target["text"].value.length == 0) {
+      alert("Please input the text!");
+    } else {
+      generate(
+        e.target["text"].value,
+        e.target["font"].value,
+        e.target["fontScale"].value,
+        e.target["paper"].value,
+        e.target["letterSpace"].value,
+        e.target["leftBias"].value
+      );
+    }
   });
 
   document.querySelector("#downloadPDF").addEventListener("click", downloadPDF);
 };
 
-function generate(
-  text,
-  font,
-  fontSize,
-  paper,
-  direction,
-  wordsPerLine,
-  bgColor
-) {
+async function generate(text, font, fontScale, paper, letterSpace, leftBias) {
   document.querySelector("#downloadPDF").setAttribute("disabled", "disabled");
   document.querySelector("#preview").innerHTML = "";
-  const config = paperConfig[paper][direction];
-  paperGlobal = paper;
+  currentConfig = paperConfig[paper];
 
   while (text.length != 0) {
-    const consumed = Math.min(50, text.length);
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
-    canvas.height = config["height"] * 10;
-    canvas.width = config["width"] * 10;
+    canvas.height = currentConfig["height"] * 10;
+    canvas.width = currentConfig["width"] * 10;
 
-    const img = new Image();
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0);
+    // render background
+    const loadingTask = pdfjsLib.getDocument(`./papers/${paper}.pdf`);
+    const page = await loadingTask.promise.then(pdf => pdf.getPage(1));
+    const viewport = page.getViewport({ scale: 1 });
+    const scale = canvas.width / viewport.width;
+    const scaledViewport = page.getViewport({ scale: scale });
+    const renderContext = {
+      canvasContext: ctx,
+      viewport: scaledViewport
     };
-    img.src = `./papers/${paper}-${direction}.svg`;
+    await page.render(renderContext).promise;
 
-    ctx.font = "30px Comic Sans MS";
-    ctx.fillStyle = "green";
-    ctx.fillText(
-      text.slice(0, consumed),
-      config["start"]["x"] * canvas.width,
-      config["start"]["y"] * canvas.height
-    );
+    // render font
+    const line_width = currentConfig["end"]["x"] - currentConfig["start"]["x"];
+    const line_height =
+      (currentConfig["end"]["y"] - currentConfig["start"]["y"]) /
+      (currentConfig["line_count"] - 1);
+
+    const fontRep = `${parseInt(
+      currentConfig["default_font_size"] * fontScale
+    )}px ${font}`;
+
+    if (!document.fonts.check(fontRep)) {
+      const fontLoaded = await new FontFace(
+        font,
+        `url(fonts/${font}.ttf)`
+      ).load();
+      document.fonts.add(fontLoaded);
+    }
+
+    ctx.font = fontRep;
+    ctx.fillStyle = "black";
+    ctx.textBaseline = "bottom";
+
+    let consumed = 0;
+    for (
+      let currentLine = 0;
+      currentLine < currentConfig["line_count"] && consumed < text.length;
+      currentLine++
+    ) {
+      // calc lineConsumed
+      let lineConsumed = 0;
+      while (true) {
+        if (
+          ctx.measureText(text.slice(consumed, consumed + lineConsumed + 1))
+            .width >
+            line_width * canvas.width ||
+          consumed + lineConsumed >= text.length
+        ) {
+          const newLinePostion = text
+            .slice(consumed, consumed + lineConsumed)
+            .indexOf("\n");
+          if (newLinePostion != -1) {
+            lineConsumed = newLinePostion + 1;
+          }
+          break;
+        } else {
+          lineConsumed++;
+        }
+      }
+
+      ctx.fillText(
+        text.slice(consumed, consumed + lineConsumed),
+        (currentConfig["start"]["x"] + (Math.random() - 0.5) * 2 * leftBias) *
+          canvas.width,
+        (currentConfig["start"]["y"] + currentLine * line_height) *
+          canvas.height
+      );
+      consumed += lineConsumed;
+    }
     document.querySelector("#preview").appendChild(canvas);
     text = text.slice(consumed, text.length);
   }
@@ -81,8 +112,10 @@ function generate(
 }
 
 function downloadPDF() {
-  allCanvas = document.querySelectorAll("#preview > canvas");
-  const pdf = new jsPDF();
+  const allCanvas = document.querySelectorAll("#preview > canvas");
+  const pdf = new jsPDF({
+    format: currentConfig["target_foramt"]
+  });
   let isFirst = true;
   for (let canvas of allCanvas) {
     if (!isFirst) {
@@ -90,7 +123,7 @@ function downloadPDF() {
     } else {
       isFirst = false;
     }
-    pdf.addImage(canvas, 0, 0);
+    pdf.addImage(canvas, 0, 0, currentConfig["width"], currentConfig["height"]);
   }
   pdf.save("download.pdf");
 }

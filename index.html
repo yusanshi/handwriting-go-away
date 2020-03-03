@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>不想写字 - I just don't want to write!</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -22,36 +22,28 @@
           <label>Font</label>
           <select name="font" class="form-control">
             <option value="FZZJ-WXCZTJW" selected>方正手迹-王潇趁早体 简</option>
-            <option>...</option>
           </select>
         </div>
         <div class="form-group col">
-          <label>Font size</label>
-          <input type="text" name="fontSize" class="form-control" value=16>
+          <label>Font scale</label>
+          <input type="text" name="fontScale" class="form-control" value="1.0">
         </div>
         <div class="form-group col">
           <label>Paper</label>
           <select name="paper" class="form-control">
-            <option value="A4" selected>A4</option>
-            <option value="A3">A3</option>
+            <option value="A4-source-line-vertical">A4-source-line-vertical</option>
+            <option value="A5-photo-line-vertival" selected>A5-photo-line-vertival</option>
           </select>
         </div>
         <div class="form-group col">
-          <label>Direction</label>
-          <select name="direction" class="form-control">
-            <option value="vertical" selected>Vertical</option>
-            <option value="horizontal">Horizontal</option>
-          </select>
+          <label>Letter space (in developing)</label>
+          <input type="text" name="letterSpace" class="form-control" value="10">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col">
-          <label>Words per line</label>
-          <input type="text" name="wordsPerLine" class="form-control" value=20>
-        </div>
-        <div class="form-group col">
-          <label>Background color</label>
-          <input type="text" name="bgColor" class="form-control" value="#999">
+          <label>Left random bias</label>
+          <input type="text" name="leftBias" class="form-control" value="0.008">
         </div>
       </div>
       <button type="submit" class="btn btn-primary btn-lg mr-2">Generate</button>
@@ -61,8 +53,9 @@
   </main>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.2.228/build/pdf.min.js"></script>
   <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
-  <script src="./app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 
 </html>
