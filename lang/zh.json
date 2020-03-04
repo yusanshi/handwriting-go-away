@@ -1,6 +1,6 @@
 {
     "title": "手写生成器",
-    "lead": "不想写字。",
+    "lead": "不想写字。(<a href='?lng=en'>English version</a>)",
     "nav-general": "基本设置",
     "nav-simulation": "“仿真”",
     "label-paper": "纸张",
@@ -23,7 +23,7 @@
     "label-horizontal-offset": "文字水平随机偏移",
     "label-vertical-offset": "文字竖直随机偏移",
     "generate": "生成",
-    "download-pdf": "下载PDF",
+    "download-pdf": "下载 PDF",
     "wait-prompt": "第一次使用需要从服务器下载字体，请耐心等待。",
     "in-developing": "正在开发",
     "input-here": "在这里输入文本",

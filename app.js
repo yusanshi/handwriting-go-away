@@ -44,7 +44,7 @@ window.onload = () => {
     .use(i18nextBrowserLanguageDetector)
     .init({
       load: "languageOnly",
-      fallbackLng: "en",
+      fallbackLng: "zh",
       backend: {
         loadPath: "lang/{{lng}}.json"
       }

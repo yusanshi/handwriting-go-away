@@ -1,6 +1,6 @@
 {
     "title": "Handwriting Generator",
-    "lead": "I just don't want to write!",
+    "lead": "I just don't want to write! (<a href='?lng=zh'>中文版本</a>)",
     "nav-general": "General Settings",
     "nav-simulation": "Realistic Simulation",
     "label-paper": "Paper",
