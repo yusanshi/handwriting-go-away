@@ -49,7 +49,7 @@ window.onload = () => {
         loadPath: "lang/{{lng}}.json"
       }
     })
-    .then(function() {
+    .then(() => {
       jqueryI18next.init(i18next, $);
       $("body").localize();
     });
@@ -85,7 +85,11 @@ async function generate(
   }
 
   document.querySelector("#downloadPDF").setAttribute("disabled", "disabled");
-  document.querySelector("#preview").innerHTML = "";
+  document.querySelector(
+    "#preview"
+  ).innerHTML = `<div class="preview-placeholder"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>`;
+  const generatedCanvas = document.createElement("div");
+
   currentConfig = paperConfig[paper];
 
   const line_width = currentConfig["end"]["x"] - currentConfig["start"]["x"];
@@ -193,15 +197,16 @@ async function generate(
       );
       consumed += lineConsumed;
     }
+    generatedCanvas.appendChild(canvas);
 
-    document.querySelector("#preview").appendChild(canvas);
     text = text.slice(consumed, text.length);
   }
 
   if (font === "upload") {
     URL.revokeObjectURL(fontUrl);
   }
-
+  document.querySelector("#preview").innerHTML = "";
+  document.querySelector("#preview").append(...generatedCanvas.childNodes);
   document.querySelector("#downloadPDF").removeAttribute("disabled");
 }
 
