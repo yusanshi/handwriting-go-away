@@ -7,7 +7,15 @@
   <title>不想写字 - I just don't want to write!</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-colorpicker@3.2.0/dist/css/bootstrap-colorpicker.min.css">
+  <style>
+    canvas {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      width: 100%;
+      height: auto;
+    }
+  </style>
 </head>
 
 <body>
@@ -18,37 +26,111 @@
       <div class="form-group">
         <textarea name="text" class="form-control" rows="12" placeholder="Input text here"></textarea>
       </div>
-      <div class="form-row">
-        <div class="form-group col">
+      <div class="row">
+        <div class="form-group col-md-4">
           <label>Font</label>
           <select name="font" class="form-control">
             <option value="FZZJ-WXCZTJW" selected>方正手迹-王潇趁早体 简</option>
           </select>
         </div>
-        <div class="form-group col">
-          <label>Font scale</label>
-          <input type="text" name="fontScale" class="form-control" value="1.0">
+        <div class="form-group col-md-4">
+          <label>Text scale</label>
+          <div class="input-group">
+            <input type="text" name="textScale" class="form-control" value="100">
+            <div class="input-group-append">
+              <div class="input-group-text">%</div>
+            </div>
+          </div>
         </div>
-        <div class="form-group col">
+        <div class="form-group col-md-4">
+          <label>Text color</label>
+          <div id="textColorGroup" class="input-group">
+            <input type="text" name="textColor" class="form-control" value="#000000">
+            <div class="input-group-append">
+              <div class="input-group-text colorpicker-input-addon"><i></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4">
           <label>Paper</label>
           <select name="paper" class="form-control">
             <option value="A4-source-line-vertical">A4-source-line-vertical</option>
-            <option value="A5-photo-line-vertival" selected>A5-photo-line-vertival</option>
+            <option value="A5-photo-line-vertical" selected>A5-photo-line-vertical</option>
           </select>
         </div>
+        <div class="form-group col-md-4">
+          <label>Paper max random rotation angle</label>
+          <div class="input-group">
+            <input type="text" name="paperRotation" class="form-control" value="2">
+            <div class="input-group-append">
+              <div class="input-group-text">°</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Left alignment bias</label>
+          <div class="input-group">
+            <input type="text" name="leftBias" class="form-control" value="0.8">
+            <div class="input-group-append">
+              <div class="input-group-text">%</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="form-row">
-        <div class="form-group col">
-          <label>Letter space (in developing)</label>
-          <input type="text" name="letterSpace" class="form-control" value="10">
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label>Text shadow offset</label>
+          <div class="input-group">
+            <input type="text" name="shadowOffset" class="form-control" value="1">
+            <div class="input-group-append">
+              <div class="input-group-text">px</div>
+            </div>
+          </div>
         </div>
-        <div class="form-group col">
-          <label>Left align bias</label>
-          <input type="text" name="leftBias" class="form-control" value="0.008">
+        <div class="form-group col-md-4">
+          <label>Text shadow radius</label>
+          <div class="input-group">
+            <input type="text" name="shadowRadius" class="form-control" value="1">
+            <div class="input-group-append">
+              <div class="input-group-text">px</div>
+            </div>
+          </div>
+
         </div>
-        <div class="form-group col">
-          <label>Paper max random slope angle</label>
-          <input type="text" name="paperSlope" class="form-control" value="2">
+        <div class="form-group col-md-4">
+          <label>Text shadow color</label>
+          <div id="shadowColorGroup" class="input-group">
+            <input type="text" name="shadowColor" class="form-control" value="#555555">
+            <div class="input-group-append">
+              <div class="input-group-text colorpicker-input-addon"><i></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label>Text blur</label>
+          <div class="input-group">
+            <input type="text" name="blur" class="form-control" value="0.6">
+            <div class="input-group-append">
+              <div class="input-group-text">px</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Text opacity</label>
+          <div class="input-group">
+            <input type="text" name="opacity" class="form-control" value="75">
+            <div class="input-group-append">
+              <div class="input-group-text">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Letter space</label>
+          <input type="text" name="letterSpace" class="form-control" value="still in developing" disabled>
         </div>
       </div>
       <button type="submit" class="btn btn-primary btn-lg mr-2">Generate</button>
@@ -57,7 +139,9 @@
     <div id="preview" class="my-4"></div>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-colorpicker@3.2.0/dist/js/bootstrap-colorpicker.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.2.228/build/pdf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@1.5.3/dist/jspdf.min.js"></script>
   <script type="module" src="app.js"></script>

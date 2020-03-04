@@ -1,5 +1,5 @@
-// "name": {
-//   target_foramt: "a4",
+// name: {
+//   target_foramt: size to save, e.g., a3, a4
 //   width: mm,
 //   height: mm,
 //   line_count: line numbers,
@@ -30,7 +30,7 @@ export default {
     },
     default_font_size: 75
   },
-  "A5-photo-line-vertival": {
+  "A5-photo-line-vertical": {
     target_foramt: "a5",
     width: 148,
     height: 210,

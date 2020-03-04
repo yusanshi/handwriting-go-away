@@ -12,26 +12,40 @@ window.onload = () => {
       generate(
         e.target["text"].value,
         e.target["font"].value,
-        e.target["fontScale"].value,
+        e.target["textScale"].value,
+        e.target["textColor"].value,
         e.target["paper"].value,
         e.target["letterSpace"].value,
         e.target["leftBias"].value,
-        e.target["paperSlope"].value
+        e.target["paperRotation"].value,
+        e.target["blur"].value,
+        e.target["opacity"].value,
+        e.target["shadowOffset"].value,
+        e.target["shadowRadius"].value,
+        e.target["shadowColor"].value
       );
     }
   });
 
   document.querySelector("#downloadPDF").addEventListener("click", downloadPDF);
+
+  $("#textColorGroup, #shadowColorGroup").colorpicker();
 };
 
 async function generate(
   text,
   font,
-  fontScale,
+  textScale,
+  textColor,
   paper,
   letterSpace,
   leftBias,
-  paperSlope
+  paperRotation,
+  blur,
+  opacity,
+  shadowOffset,
+  shadowRadius,
+  shadowColor
 ) {
   document.querySelector("#downloadPDF").setAttribute("disabled", "disabled");
   document.querySelector("#preview").innerHTML = "";
@@ -44,12 +58,12 @@ async function generate(
     canvas.width = currentConfig["width"] * 10;
     canvas.height = currentConfig["height"] * 10;
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    const radian = ((Math.random() - 0.5) * 2 * paperSlope * Math.PI) / 180;
+    const radian = ((Math.random() - 0.5) * 2 * paperRotation * Math.PI) / 180;
     ctx.rotate(radian);
-    // How to get scale factor such that after rotate, no blank area exist
+    // How to get scale factor such that after rotation, no blank area exist?
     // wolframalpha: Solve[{y - b/2*cos(θ) == (x - b/2*sin(θ))*(-tan(θ)), y==b/a*x},{x,y}]
-    // get x than factor equals to a/2/x, i.e., factor = (tan(θ)/k + 1)cos(θ)
-    // Also, abs() is needed i.e. it works for both clockwise and anti-clockwise rotatation
+    // Let x denote its nontrivial solution, then factor equals to (a/2)/x, i.e., factor = (tan(θ)/k + 1)cos(θ)
+    // Also, abs() is needed i.e. it works for both clockwise and anti-clockwise rotation
     const radianAbs = Math.abs(radian);
     let k = canvas.height / canvas.width;
     if (k > 1) {
@@ -78,7 +92,7 @@ async function generate(
       (currentConfig["line_count"] - 1);
 
     const fontRep = `${parseInt(
-      currentConfig["default_font_size"] * fontScale
+      (currentConfig["default_font_size"] * textScale) / 100
     )}px ${font}`;
 
     if (!document.fonts.check(fontRep)) {
@@ -90,9 +104,9 @@ async function generate(
     }
 
     ctx.font = fontRep;
-    ctx.fillStyle = "black";
+    ctx.fillStyle = textColor;
     ctx.textBaseline = "bottom";
-    ctx.filter = "blur(0.6px) opacity(85%) drop-shadow(1px 1px 1px #555)";
+    ctx.filter = `blur(${blur}px) opacity(${opacity}%) drop-shadow(${shadowOffset}px ${shadowOffset}px ${shadowRadius}px ${shadowColor})`;
 
     let consumed = 0;
     for (
@@ -123,7 +137,8 @@ async function generate(
 
       ctx.fillText(
         text.slice(consumed, consumed + lineConsumed),
-        (currentConfig["start"]["x"] + Math.random() * leftBias) * canvas.width,
+        (currentConfig["start"]["x"] + (Math.random() * leftBias) / 100) *
+          canvas.width,
         (currentConfig["start"]["y"] + currentLine * line_height) *
           canvas.height
       );
