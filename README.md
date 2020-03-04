@@ -4,15 +4,9 @@ Handwriting text generator. https://yusanshi.com/handwriting/
 
 ## Get started
 
-Clone the project. Visit https://www.foundertype.com/ , download `FZZJ-WXCZTJW.TTF`（方正手迹-王潇趁早体 简）to `./fonts`.
+Clone the project, download the fonts you need into `./fonts`, then modify `<select name="font" ...` in `index.html`.
 
-## TODO
-
-- [ ] Custom letter space
-- [ ] Support more papers
-- [ ] Support more fonts
-- [ ] Text location randomness
-- [ ] Support user-uploaded fonts
+The fonts I use are downloaded from https://www.foundertype.com/.
 
 ## LICENSE
 

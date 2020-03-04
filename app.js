@@ -6,42 +6,48 @@ let currentConfig;
 window.onload = () => {
   document.querySelector("#generatorForm").addEventListener("submit", e => {
     e.preventDefault();
-    if (e.target["text"].value.length == 0) {
-      alert("Please input the text!");
-    } else {
-      generate(
-        e.target["text"].value,
-        e.target["font"].value,
-        e.target["textScale"].value,
-        e.target["textColor"].value,
-        e.target["paper"].value,
-        e.target["charSpace"].value,
-        e.target["shadowOffset"].value,
-        e.target["shadowRadius"].value,
-        e.target["shadowColor"].value,
-        e.target["blur"].value,
-        e.target["opacity"].value,
-        e.target["paperRotation"].value,
-        e.target["beginningOffset"].value,
-        e.target["distortion"].value,
-        e.target["horizontalOffset"].value,
-        e.target["verticalOffset"].value
-      );
-    }
+    generate(
+      e.target["text"].value,
+      e.target["paper"].value,
+      e.target["textScale"].value,
+      e.target["textColor"].value,
+      e.target["charSpace"].value,
+      e.target["font"].value,
+      e.target["uploadFont"].files[0],
+      e.target["shadowOffset"].value,
+      e.target["shadowRadius"].value,
+      e.target["shadowColor"].value,
+      e.target["blur"].value,
+      e.target["opacity"].value,
+      e.target["paperRotation"].value,
+      e.target["beginningOffset"].value,
+      e.target["distortion"].value,
+      e.target["horizontalOffset"].value,
+      e.target["verticalOffset"].value
+    );
   });
 
   document.querySelector("#downloadPDF").addEventListener("click", downloadPDF);
+
+  document.querySelector("[name='font']").addEventListener("change", e => {
+    if (e.target.value === "upload") {
+      document.querySelector("#uploadFontArea").style.display = "";
+    } else {
+      document.querySelector("#uploadFontArea").style.display = "none";
+    }
+  });
 
   $("#textColorGroup, #shadowColorGroup").colorpicker();
 };
 
 async function generate(
   text,
-  font,
+  paper,
   textScale,
   textColor,
-  paper,
   charSpace,
+  font,
+  uploadFont,
   shadowOffset,
   shadowRadius,
   shadowColor,
@@ -53,9 +59,48 @@ async function generate(
   horizontalOffset,
   verticalOffset
 ) {
+  if (text === "") {
+    alert("Please input the text!");
+    return;
+  }
+
+  if (font === "upload" && typeof uploadFont === "undefined") {
+    alert("No font uploaded!");
+    return;
+  }
+
   document.querySelector("#downloadPDF").setAttribute("disabled", "disabled");
   document.querySelector("#preview").innerHTML = "";
   currentConfig = paperConfig[paper];
+
+  const line_width = currentConfig["end"]["x"] - currentConfig["start"]["x"];
+  const line_height =
+    (currentConfig["end"]["y"] - currentConfig["start"]["y"]) /
+    (currentConfig["line_count"] - 1);
+
+  let fontName;
+  let fontUrl;
+
+  if (font === "upload") {
+    fontName = uploadFont.name;
+    fontUrl = URL.createObjectURL(uploadFont);
+  } else {
+    fontName = font;
+    fontUrl = `fonts/${font}`;
+  }
+
+  const fontRep = `${parseInt(
+    (currentConfig["default_font_size"] * textScale) / 100
+  )}px "${fontName}"`;
+
+  if (!document.fonts.check(fontRep)) {
+    const fontLoaded = await new FontFace(fontName, `url("${fontUrl}")`).load();
+    document.fonts.add(fontLoaded);
+    if (!document.fonts.check(fontRep)) {
+      alert("Text size not supported!");
+      return;
+    }
+  }
 
   while (text.length != 0) {
     const canvas = document.createElement("canvas");
@@ -90,24 +135,6 @@ async function generate(
       viewport: scaledViewport
     };
     await page.render(renderContext).promise;
-
-    // render font
-    const line_width = currentConfig["end"]["x"] - currentConfig["start"]["x"];
-    const line_height =
-      (currentConfig["end"]["y"] - currentConfig["start"]["y"]) /
-      (currentConfig["line_count"] - 1);
-
-    const fontRep = `${parseInt(
-      (currentConfig["default_font_size"] * textScale) / 100
-    )}px ${font}`;
-
-    if (!document.fonts.check(fontRep)) {
-      const fontLoaded = await new FontFace(
-        font,
-        `url(fonts/${font}.TTF)`
-      ).load();
-      document.fonts.add(fontLoaded);
-    }
 
     ctx.font = fontRep;
     ctx.fillStyle = textColor;
@@ -155,6 +182,11 @@ async function generate(
     document.querySelector("#preview").appendChild(canvas);
     text = text.slice(consumed, text.length);
   }
+
+  if (font === "upload") {
+    URL.revokeObjectURL(fontUrl);
+  }
+
   document.querySelector("#downloadPDF").removeAttribute("disabled");
 }
 

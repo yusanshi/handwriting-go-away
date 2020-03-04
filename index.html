@@ -41,9 +41,10 @@
             <div class="tab-pane show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label>Font</label>
-                  <select name="font" class="form-control">
-                    <option value="FZZJ-WXCZTJW" selected>方正手迹-王潇趁早体 简</option>
+                  <label>Paper</label>
+                  <select name="paper" class="form-control">
+                    <option value="A4-source-line-vertical">A4-source-line-vertical</option>
+                    <option value="A5-photo-line-vertical" selected>A5-photo-line-vertical</option>
                   </select>
                 </div>
                 <div class="form-group col-md-6">
@@ -55,8 +56,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="form-group col-md-6">
                   <label>Text color</label>
                   <div id="textColorGroup" class="input-group">
@@ -67,17 +66,27 @@
                   </div>
                 </div>
                 <div class="form-group col-md-6">
-                  <label>Paper</label>
-                  <select name="paper" class="form-control">
-                    <option value="A4-source-line-vertical">A4-source-line-vertical</option>
-                    <option value="A5-photo-line-vertical" selected>A5-photo-line-vertical</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col-md-6">
                   <label>Character space</label>
                   <input type="text" name="charSpace" class="form-control" value="still in developing" disabled>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Font</label>
+                  <select name="font" class="form-control">
+                    <option value="FZZJ-WXCZTJW.TTF" selected>方正手迹-王潇趁早体 简</option>
+                    <option value="FZSJ-GBQSJW.TTF">方正手迹-告白情书</option>
+                    <option value="FZSJ-SGLDXMHJW.TTF">方正手迹-时光里的小美好</option>
+                    <option value="FZSJ-WSMQSJW.TTF">方正手迹-未署名情书 简</option>
+                    <option value="FZZJ-DHTYBKSJW.TTF">方正字迹-杜慧田硬笔楷书简体</option>
+                    <option value="FZQTJW.TTF">方正启体简体 </option>
+                    <option value="upload">Upload a font</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6" id="uploadFontArea" style="display: none">
+                  <label>Upload a font</label>
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="uploadFont">
+                    <label class="custom-file-label">Choose a font file</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -101,8 +110,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="form-group col-md-6">
                   <label>Text shadow color</label>
                   <div id="shadowColorGroup" class="input-group">
@@ -121,8 +128,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="form-group col-md-6">
                   <label>Text opacity</label>
                   <div class="input-group">
@@ -141,8 +146,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="form-group col-md-6">
                   <label>Line beginning offset</label>
                   <div class="input-group">
@@ -161,8 +164,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
                 <div class="form-group col-md-6">
                   <label>Character horizontal offset</label>
                   <div class="input-group">
