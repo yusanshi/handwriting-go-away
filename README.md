@@ -12,6 +12,7 @@ Clone the project. Visit https://www.foundertype.com/ , download `FZZJ-WXCZTJW.T
 - [ ] Support more papers
 - [ ] Support more fonts
 - [ ] Text location randomness
+- [ ] Support user-uploaded fonts
 
 ## LICENSE
 

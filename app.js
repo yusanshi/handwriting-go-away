@@ -15,14 +15,17 @@ window.onload = () => {
         e.target["textScale"].value,
         e.target["textColor"].value,
         e.target["paper"].value,
-        e.target["letterSpace"].value,
-        e.target["leftBias"].value,
-        e.target["paperRotation"].value,
-        e.target["blur"].value,
-        e.target["opacity"].value,
+        e.target["charSpace"].value,
         e.target["shadowOffset"].value,
         e.target["shadowRadius"].value,
-        e.target["shadowColor"].value
+        e.target["shadowColor"].value,
+        e.target["blur"].value,
+        e.target["opacity"].value,
+        e.target["paperRotation"].value,
+        e.target["beginningOffset"].value,
+        e.target["distortion"].value,
+        e.target["horizontalOffset"].value,
+        e.target["verticalOffset"].value
       );
     }
   });
@@ -38,14 +41,17 @@ async function generate(
   textScale,
   textColor,
   paper,
-  letterSpace,
-  leftBias,
-  paperRotation,
-  blur,
-  opacity,
+  charSpace,
   shadowOffset,
   shadowRadius,
-  shadowColor
+  shadowColor,
+  blur,
+  opacity,
+  paperRotation,
+  beginningOffset,
+  distortion,
+  horizontalOffset,
+  verticalOffset
 ) {
   document.querySelector("#downloadPDF").setAttribute("disabled", "disabled");
   document.querySelector("#preview").innerHTML = "";
@@ -137,7 +143,8 @@ async function generate(
 
       ctx.fillText(
         text.slice(consumed, consumed + lineConsumed),
-        (currentConfig["start"]["x"] + (Math.random() * leftBias) / 100) *
+        (currentConfig["start"]["x"] +
+          (Math.random() * beginningOffset) / 100) *
           canvas.width,
         (currentConfig["start"]["y"] + currentLine * line_height) *
           canvas.height
