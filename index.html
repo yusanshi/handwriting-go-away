@@ -21,34 +21,34 @@
 
 <body>
   <main role="main" class="container-fluid p-3 p-md-5">
-    <h3 class="display-4">Handwriting Generator</h3>
-    <p class="lead">I just don't want to write!</p>
+    <h3 class="display-4" data-i18n="title"></h3>
+    <p class="lead" data-i18n="lead"></p>
     <div class="row mt-4">
       <div class="col-lg-5">
         <form id="generatorForm">
           <div class="form-group">
-            <textarea name="text" class="form-control" rows="12" placeholder="Input text here"></textarea>
+            <textarea name="text" class="form-control" rows="12" data-i18n="[placeholder]input-here"></textarea>
           </div>
           <nav class="mt-4">
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
               <a class="nav-item nav-link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab"
-                aria-controls="nav-general" aria-selected="true">General</a>
+                aria-controls="nav-general" aria-selected="true" data-i18n="nav-general"></a>
               <a class="nav-item nav-link" id="nav-simulation-tab" data-toggle="tab" href="#nav-simulation" role="tab"
-                aria-controls="nav-simulation" aria-selected="false">Realistic Simulation</a>
+                aria-controls="nav-simulation" aria-selected="false" data-i18n="nav-simulation"></a>
             </div>
           </nav>
           <div class="tab-content my-3" id="nav-tabContent">
             <div class="tab-pane show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
               <div class="row">
-                <div class="form-group col-md-6">
-                  <label>Paper</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-paper"></label>
                   <select name="paper" class="form-control">
-                    <option value="A4-source-line-vertical">A4-source-line-vertical</option>
-                    <option value="A5-photo-line-vertical" selected>A5-photo-line-vertical</option>
+                    <option value="A4-source-line-vertical" data-i18n="A4-source-line-vertical"></option>
+                    <option value="A5-photo-line-vertical" data-i18n="A5-photo-line-vertical" selected></option>
                   </select>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Text scale</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-scale"></label>
                   <div class="input-group">
                     <input type="text" name="textScale" class="form-control" value="100">
                     <div class="input-group-append">
@@ -56,8 +56,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Text color</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-color"></label>
                   <div id="textColorGroup" class="input-group">
                     <input type="text" name="textColor" class="form-control" value="#000000">
                     <div class="input-group-append">
@@ -65,12 +65,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Character space</label>
-                  <input type="text" name="charSpace" class="form-control" value="still in developing" disabled>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-char-space"></label>
+                  <input type="text" name="charSpace" class="form-control" data-i18n="[value]in-developing" disabled>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Font</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-font"></label>
                   <select name="font" class="form-control">
                     <option value="FZZJ-WXCZTJW.TTF" selected>方正手迹-王潇趁早体 简</option>
                     <option value="FZSJ-GBQSJW.TTF">方正手迹-告白情书</option>
@@ -78,22 +78,22 @@
                     <option value="FZSJ-WSMQSJW.TTF">方正手迹-未署名情书 简</option>
                     <option value="FZZJ-DHTYBKSJW.TTF">方正字迹-杜慧田硬笔楷书简体</option>
                     <option value="FZQTJW.TTF">方正启体简体 </option>
-                    <option value="upload">Upload a font</option>
+                    <option value="upload" data-i18n="upload-font"></option>
                   </select>
                 </div>
-                <div class="form-group col-md-6" id="uploadFontArea" style="display: none">
-                  <label>Upload a font</label>
+                <div class="form-group col-12 col-md-6" id="uploadFontArea" style="display: none">
+                  <label data-i18n="upload-font"></label>
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" name="uploadFont">
-                    <label class="custom-file-label">Choose a font file</label>
+                    <label class="custom-file-label" data-i18n="choose-font"></label>
                   </div>
                 </div>
               </div>
             </div>
             <div class="tab-pane" id="nav-simulation" role="tabpanel" aria-labelledby="nav-simulation-tab">
               <div class="row">
-                <div class="form-group col-md-6">
-                  <label>Text shadow offset</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-shadow-offste"></label>
                   <div class="input-group">
                     <input type="text" name="shadowOffset" class="form-control" value="1">
                     <div class="input-group-append">
@@ -101,8 +101,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Text shadow radius</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-shadow-radius"></label>
                   <div class="input-group">
                     <input type="text" name="shadowRadius" class="form-control" value="1">
                     <div class="input-group-append">
@@ -110,8 +110,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Text shadow color</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-shadow-color"></label>
                   <div id="shadowColorGroup" class="input-group">
                     <input type="text" name="shadowColor" class="form-control" value="#555555">
                     <div class="input-group-append">
@@ -119,8 +119,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Text blur</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-blur"></label>
                   <div class="input-group">
                     <input type="text" name="blur" class="form-control" value="0.6">
                     <div class="input-group-append">
@@ -128,8 +128,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Text opacity</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-opacity"></label>
                   <div class="input-group">
                     <input type="text" name="opacity" class="form-control" value="75">
                     <div class="input-group-append">
@@ -137,8 +137,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Paper max random rotation angle</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-rotation"></label>
                   <div class="input-group">
                     <input type="text" name="paperRotation" class="form-control" value="2">
                     <div class="input-group-append">
@@ -146,8 +146,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Line beginning offset</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-beginning-offset"></label>
                   <div class="input-group">
                     <input type="text" name="beginningOffset" class="form-control" value="1.6">
                     <div class="input-group-append">
@@ -155,29 +155,30 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Character distortion</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-distortion"></label>
                   <div class="input-group">
-                    <input type="text" name="distortion" class="form-control" value="still in developing" disabled>
+                    <input type="text" name="distortion" class="form-control" data-i18n="[value]in-developing" disabled>
                     <div class="input-group-append">
                       <div class="input-group-text">%</div>
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Character horizontal offset</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-horizontal-offset"></label>
                   <div class="input-group">
-                    <input type="text" name="horizontalOffset" class="form-control" value="still in developing"
+                    <input type="text" name="horizontalOffset" class="form-control" data-i18n="[value]in-developing"
                       disabled>
                     <div class="input-group-append">
                       <div class="input-group-text">%</div>
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label>Character vertical offset</label>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-vertical-offset"></label>
                   <div class="input-group">
-                    <input type="text" name="verticalOffset" class="form-control" value="still in developing" disabled>
+                    <input type="text" name="verticalOffset" class="form-control" data-i18n="[value]in-developing"
+                      disabled>
                     <div class="input-group-append">
                       <div class="input-group-text">%</div>
                     </div>
@@ -186,8 +187,9 @@
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary btn-lg mr-4">Generate</button>
-          <button type="button" id="downloadPDF" class="btn btn-outline-primary btn-lg" disabled>Download PDF</button>
+          <button type="submit" class="btn btn-primary btn-lg mr-4" data-i18n="generate"></button>
+          <button type="button" id="downloadPDF" class="btn btn-outline-primary btn-lg" data-i18n="download-pdf"
+            disabled></button>
         </form>
       </div>
       <div class="col-lg-7 mt-4 mt-lg-0">
@@ -208,9 +210,7 @@
                 c1.5-0.1,2.9-0.1,4.4-0.1C189.7,154.5,189.4,145.1,183.1,144.5z" />
               </g>
             </svg>
-            <div class="alert alert-light" role="alert">
-              Wait patiently as it takes some time to download font files.
-            </div>
+            <div class="alert alert-light" role="alert" data-i18n="wait-prompt"></div>
           </div>
         </div>
       </div>
@@ -268,6 +268,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-colorpicker@3.2.0/dist/js/bootstrap-colorpicker.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.2.228/build/pdf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@1.5.3/dist/jspdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/i18next@19.3.2/dist/umd/i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-i18next@1.2.1/dist/umd/jquery-i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/i18next-xhr-backend@3.2.2/dist/umd/i18nextXHRBackend.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/i18next-browser-languagedetector@4.0.2/dist/umd/i18nextBrowserLanguageDetector.min.js"></script>
   <script type="module" src="app.js"></script>
 </body>
 

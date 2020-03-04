@@ -38,6 +38,21 @@ window.onload = () => {
   });
 
   $("#textColorGroup, #shadowColorGroup").colorpicker();
+
+  i18next
+    .use(i18nextXHRBackend)
+    .use(i18nextBrowserLanguageDetector)
+    .init({
+      load: "languageOnly",
+      fallbackLng: "en",
+      backend: {
+        loadPath: "lang/{{lng}}.json"
+      }
+    })
+    .then(function() {
+      jqueryI18next.init(i18next, $);
+      $("body").localize();
+    });
 };
 
 async function generate(
@@ -60,12 +75,12 @@ async function generate(
   verticalOffset
 ) {
   if (text === "") {
-    alert("Please input the text!");
+    alert(i18next.t("alert-no-text-input"));
     return;
   }
 
   if (font === "upload" && typeof uploadFont === "undefined") {
-    alert("No font uploaded!");
+    alert(i18next.t("alert-no-font-uploaded"));
     return;
   }
 
@@ -97,7 +112,7 @@ async function generate(
     const fontLoaded = await new FontFace(fontName, `url("${fontUrl}")`).load();
     document.fonts.add(fontLoaded);
     if (!document.fonts.check(fontRep)) {
-      alert("Text size not supported!");
+      alert(i18next.t("alert-text-size-not-supported"));
       return;
     }
   }
