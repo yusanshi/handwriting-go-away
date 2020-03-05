@@ -1,2 +1,5 @@
 fonts/*
 !fonts/.gitkeep
+node_modules
+package-lock.json
+
