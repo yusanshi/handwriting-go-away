@@ -95,9 +95,17 @@ async function generate(
   }
 
   document.querySelector("#downloadPDF").setAttribute("disabled", "disabled");
-  document.querySelector(
-    "#preview"
-  ).innerHTML = `<div class="preview-placeholder"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>`;
+  document.querySelector("#preview").innerHTML = `
+<div class="preview-placeholder">
+  <div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="alert alert-light" role="alert" id="loading-prompt"></div>
+</div>
+`;
   const generatedCanvas = document.createElement("div");
 
   currentConfig = paperConfig[paper];
@@ -109,6 +117,10 @@ async function generate(
   const line_height =
     (currentConfig["end"]["y"] - currentConfig["start"]["y"]) /
     (realLineCount - 1);
+
+  document.querySelector("#loading-prompt").innerText = i18next.t(
+    "loading-font-prompt"
+  );
 
   let fontName;
   let fontUrl;
@@ -126,15 +138,39 @@ async function generate(
   )}px "${fontName}"`;
 
   if (!document.fonts.check(fontRep)) {
-    const fontLoaded = await new FontFace(fontName, `url("${fontUrl}")`).load();
-    document.fonts.add(fontLoaded);
+    try {
+      let fontLoaded = await new FontFace(fontName, `url("${fontUrl}")`).load();
+      document.fonts.add(fontLoaded);
+    } catch (err) {
+      alert(i18next.t("alert-wrong-font-file"));
+      document.querySelector("#loading-prompt").innerText = i18next.t(
+        "alert-wrong-font-file"
+      );
+      return;
+    }
     if (!document.fonts.check(fontRep)) {
       alert(i18next.t("alert-text-size-not-supported"));
+      document.querySelector("#loading-prompt").innerText = i18next.t(
+        "alert-text-size-not-supported"
+      );
       return;
     }
   }
 
+  document.querySelector("#loading-prompt").innerText = i18next.t(
+    "loading-paper-prompt"
+  );
+
+  const loadingTask = pdfjsLib.getDocument(`./papers/${paper}.pdf`);
+  const page = await loadingTask.promise.then(pdf => pdf.getPage(1));
+
+  let pageCount = 0;
   while (text.length != 0) {
+    pageCount++;
+    document.querySelector(
+      "#loading-prompt"
+    ).innerText = i18next.t("generating-prompt", { count: pageCount });
+
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
@@ -156,12 +192,10 @@ async function generate(
     ctx.scale(factor, factor);
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
-    // render background
-    const loadingTask = pdfjsLib.getDocument(`./papers/${paper}.pdf`);
-    const page = await loadingTask.promise.then(pdf => pdf.getPage(1));
     const viewport = page.getViewport({ scale: 1 });
     const scale = canvas.width / viewport.width;
     const scaledViewport = page.getViewport({ scale: scale });
+
     const renderContext = {
       canvasContext: ctx,
       viewport: scaledViewport

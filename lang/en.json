@@ -13,7 +13,7 @@
     "label-char-space": "Letter space",
     "label-font": "Font",
     "upload-font": "Upload a font",
-    "choose-font": "Choose a font file",
+    "choose-font": "Choose a font file (ttf, otf...)",
     "label-shadow-offste": "Text shadow offset",
     "label-shadow-radius": "Text shadow radius",
     "label-shadow-color": "Text shadow color",
@@ -31,5 +31,9 @@
     "input-here": "Input text here",
     "alert-text-size-not-supported": "Text size not supported!",
     "alert-no-text-input": "Please input the text!",
-    "alert-no-font-uploaded": "No font uploaded!"
+    "alert-no-font-uploaded": "No font uploaded!",
+    "alert-wrong-font-file":"Wrong font file!",
+    "loading-font-prompt": "Loading font...",
+    "loading-paper-prompt": "Loading paper...",
+    "generating-prompt": "Generating pages... (Current page: {{ count }})"
 }

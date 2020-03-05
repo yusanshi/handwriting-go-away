@@ -13,7 +13,7 @@
     "label-char-space": "字间距",
     "label-font": "字体",
     "upload-font": "上传字体",
-    "choose-font": "选择一个字体文件",
+    "choose-font": "选择字体文件 (ttf, otf...)",
     "label-shadow-offste": "文本阴影偏移",
     "label-shadow-radius": "文本阴影半径",
     "label-shadow-color": "文本阴影颜色",
@@ -31,5 +31,9 @@
     "input-here": "在这里输入文本",
     "alert-text-size-not-supported": "文字尺寸不支持！",
     "alert-no-text-input": "请输入文本！",
-    "alert-no-font-uploaded": "没有上传字体！"
+    "alert-no-font-uploaded": "没有上传字体！",
+    "alert-wrong-font-file": "错误的字体文件！",
+    "loading-font-prompt": "加载字体...",
+    "loading-paper-prompt": "加载纸张...",
+    "generating-prompt": "生成页面...（当前页面：{{ count }}）"
 }
