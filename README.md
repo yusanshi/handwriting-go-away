@@ -1,5 +1,7 @@
 # Handwriting Generator
 
+> This is original Vanilla JS version. It is a single page site and is not maintained. Please checkout the master branch which is built with Vue.js.
+
 Handwriting text generator. https://yusanshi.com/handwriting/
 
 ## Get started
