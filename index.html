@@ -67,7 +67,7 @@
 </head>
 
 <body>
-  <main role="main" class="container-fluid p-3 p-md-5">
+  <main role="main" class="container-fluid px-3 py-4 p-md-5">
     <h3 class="display-4" data-i18n="title"></h3>
     <p class="lead" data-i18n="[html]lead"></p>
     <div class="row mt-4">
@@ -90,9 +90,33 @@
                 <div class="form-group col-12 col-md-6">
                   <label data-i18n="label-paper"></label>
                   <select name="paper" class="form-control">
-                    <option value="A4-source-line-vertical" data-i18n="A4-source-line-vertical"></option>
                     <option value="A5-photo-line-vertical" data-i18n="A5-photo-line-vertical" selected></option>
+                    <option value="A4-original-line-vertical" data-i18n="A4-original-line-vertical"></option>
+                    <option value="A4-original-noline-vertical" data-i18n="A4-original-noline-vertical"></option>
                   </select>
+                </div>
+                <div class="form-group col-12 col-md-6" id="lineCountArea" style="display: none">
+                  <label data-i18n="label-line-count"></label>
+                  <input type="text" name="lineCount" class="form-control" value="22">
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label data-i18n="label-font"></label>
+                  <select name="font" class="form-control">
+                    <option value="FZZJ-WXCZTJW.TTF" selected>方正手迹-王潇趁早体 简</option>
+                    <option value="FZSJ-GBQSJW.TTF">方正手迹-告白情书</option>
+                    <option value="FZSJ-SGLDXMHJW.TTF">方正手迹-时光里的小美好</option>
+                    <option value="FZSJ-WSMQSJW.TTF">方正手迹-未署名情书 简</option>
+                    <option value="FZZJ-DHTYBKSJW.TTF">方正字迹-杜慧田硬笔楷书简体</option>
+                    <option value="FZQTJW.TTF">方正启体简体 </option>
+                    <option value="upload" data-i18n="upload-font"></option>
+                  </select>
+                </div>
+                <div class="form-group col-12 col-md-6" id="uploadFontArea" style="display: none">
+                  <label data-i18n="upload-font"></label>
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="uploadFont">
+                    <label class="custom-file-label" data-i18n="choose-font"></label>
+                  </div>
                 </div>
                 <div class="form-group col-12 col-md-6">
                   <label data-i18n="label-scale"></label>
@@ -115,25 +139,6 @@
                 <div class="form-group col-12 col-md-6">
                   <label data-i18n="label-char-space"></label>
                   <input type="text" name="charSpace" class="form-control" data-i18n="[value]in-developing" disabled>
-                </div>
-                <div class="form-group col-12 col-md-6">
-                  <label data-i18n="label-font"></label>
-                  <select name="font" class="form-control">
-                    <option value="FZZJ-WXCZTJW.TTF" selected>方正手迹-王潇趁早体 简</option>
-                    <option value="FZSJ-GBQSJW.TTF">方正手迹-告白情书</option>
-                    <option value="FZSJ-SGLDXMHJW.TTF">方正手迹-时光里的小美好</option>
-                    <option value="FZSJ-WSMQSJW.TTF">方正手迹-未署名情书 简</option>
-                    <option value="FZZJ-DHTYBKSJW.TTF">方正字迹-杜慧田硬笔楷书简体</option>
-                    <option value="FZQTJW.TTF">方正启体简体 </option>
-                    <option value="upload" data-i18n="upload-font"></option>
-                  </select>
-                </div>
-                <div class="form-group col-12 col-md-6" id="uploadFontArea" style="display: none">
-                  <label data-i18n="upload-font"></label>
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="uploadFont">
-                    <label class="custom-file-label" data-i18n="choose-font"></label>
-                  </div>
                 </div>
               </div>
             </div>

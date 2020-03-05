@@ -15,11 +15,26 @@
 // },
 
 export default {
-  "A4-source-line-vertical": {
+  "A4-original-line-vertical": {
     target_foramt: "a4",
     width: 210,
     height: 297,
     line_count: 22,
+    start: {
+      x: 0.056,
+      y: 0.13
+    },
+    end: {
+      x: 0.944,
+      y: 0.908
+    },
+    default_font_size: 75
+  },
+  "A4-original-noline-vertical": {
+    target_foramt: "a4",
+    width: 210,
+    height: 297,
+    // line_count: 0,
     start: {
       x: 0.056,
       y: 0.13

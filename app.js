@@ -8,12 +8,13 @@ window.onload = () => {
     e.preventDefault();
     generate(
       e.target["text"].value,
+      e.target["font"].value,
+      e.target["uploadFont"].files[0],
       e.target["paper"].value,
+      e.target["lineCount"].value,
       e.target["textScale"].value,
       e.target["textColor"].value,
       e.target["charSpace"].value,
-      e.target["font"].value,
-      e.target["uploadFont"].files[0],
       e.target["shadowOffset"].value,
       e.target["shadowRadius"].value,
       e.target["shadowColor"].value,
@@ -37,6 +38,14 @@ window.onload = () => {
     }
   });
 
+  document.querySelector("[name='paper']").addEventListener("change", e => {
+    if (e.target.value.includes("noline")) {
+      document.querySelector("#lineCountArea").style.display = "";
+    } else {
+      document.querySelector("#lineCountArea").style.display = "none";
+    }
+  });
+
   $("#textColorGroup, #shadowColorGroup").colorpicker();
 
   i18next
@@ -57,12 +66,13 @@ window.onload = () => {
 
 async function generate(
   text,
+  font,
+  uploadFont,
   paper,
+  lineCount,
   textScale,
   textColor,
   charSpace,
-  font,
-  uploadFont,
   shadowOffset,
   shadowRadius,
   shadowColor,
@@ -92,10 +102,13 @@ async function generate(
 
   currentConfig = paperConfig[paper];
 
+  const realLineCount = paper.includes("noline")
+    ? lineCount
+    : currentConfig["line_count"];
   const line_width = currentConfig["end"]["x"] - currentConfig["start"]["x"];
   const line_height =
     (currentConfig["end"]["y"] - currentConfig["start"]["y"]) /
-    (currentConfig["line_count"] - 1);
+    (realLineCount - 1);
 
   let fontName;
   let fontUrl;
@@ -163,7 +176,7 @@ async function generate(
     let consumed = 0;
     for (
       let currentLine = 0;
-      currentLine < currentConfig["line_count"] && consumed < text.length;
+      currentLine < realLineCount && consumed < text.length;
       currentLine++
     ) {
       // calc lineConsumed
@@ -198,7 +211,6 @@ async function generate(
       consumed += lineConsumed;
     }
     generatedCanvas.appendChild(canvas);
-
     text = text.slice(consumed, text.length);
   }
 
