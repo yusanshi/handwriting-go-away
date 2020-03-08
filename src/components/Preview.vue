@@ -8,5 +8,15 @@
 
 export default {
   name: 'Preview',
+  data() {
+    return {
+      pdf: null,
+    };
+  },
+  methods: {
+    download() {
+
+    },
+  },
 };
 </script>

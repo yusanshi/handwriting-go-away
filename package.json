@@ -1,5 +1,5 @@
 {
-  "name": "handwriting_generator",
+  "name": "handwriting-go-away",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "core-js": "^3.6.4",
     "vue": "^2.6.11",
     "vue-i18n": "^8.15.4",
+    "vue-meta": "^2.3.3",
     "vue-router": "^3.1.5"
   },
   "devDependencies": {

@@ -1,0 +1,108 @@
+{
+  "lang-name": "English",
+  "base-title": "Handwriting Go Away",
+  "nav": {
+    "home": "Home",
+    "faq": "FAQ",
+    "about": "About"
+  },
+  "tab": {
+    "general": "General Settings",
+    "simulation": "Realistic Simulation"
+  },
+  "language": "Language",
+  "label": {
+    "paper": "Paper",
+    "line-count": "Line count",
+    "scale": "Text scale",
+    "color": "Text color",
+    "char-space": "Letter space",
+    "font": "Font",
+    "upload-font": "Upload a font",
+    "shadow-offset": "Text shadow offset",
+    "shadow-radius": "Text shadow radius",
+    "shadow-color": "Text shadow color",
+    "blur": "Text blur",
+    "opacity": "Text opacity",
+    "rotation": "Paper max random rotation angle",
+    "beginning-offset": "Line beginning random offset",
+    "distortion": "Character distortion",
+    "horizontal-offset": "Character horizontal random offset",
+    "vertical-offset": "Character vertical random offset"
+  },
+  "placeholder": {
+    "input-here": "Input text here",
+    "choose-font": "Choose a font file or drop it here",
+    "drop-font-here": "Drop it here"
+  },
+  "generate": "Generate",
+  "download-pdf": "Download PDF",
+  "in-developing": "still in developing",
+  "prompt": {
+    "wait": "Wait patiently as it takes some time to download font files.",
+    "loading-font": "Loading font...",
+    "loading-paper": "Loading paper...",
+    "generating": "Generating pages... (Current page: )"
+  },
+  "alert": {
+    "text-size-not-supported": "Text size not supported!",
+    "no-text-input": "Please input the text!",
+    "no-font-uploaded": "No font uploaded!",
+    "wrong-font-file": "Wrong font file!"
+  },
+  "about": "This is an open-source project (MIT). View source on <a target='_blank' href='https://github.com/yusanshi/handwriting-go-away'>Github</a>.",
+  "paper": [
+    {
+      "value": "A5-photo-line-vertical",
+      "text": "A5 Photo Lined Vertical"
+    },
+    {
+      "value": "A4-source-line-vertical",
+      "text": "A4 Source Lined Vertical"
+    },
+    {
+      "value": "A4-source-noline-vertical",
+      "text": "A4 Source Noline Vertical"
+    }
+  ],
+  "font": [
+    {
+      "value": "FZZJ-WXCZTJW.TTF",
+      "text": "方正手迹-王潇趁早体 简"
+    },
+    {
+      "value": "FZSJ-GBQSJW.TTF",
+      "text": "方正手迹-告白情书"
+    },
+    {
+      "value": "FZSJ-SGLDXMHJW.TTF",
+      "text": "方正手迹-时光里的小美好"
+    },
+    {
+      "value": "FZSJ-WSMQSJW.TTF",
+      "text": "方正手迹-未署名情书 简"
+    },
+    {
+      "value": "FZZJ-DHTYBKSJW.TTF",
+      "text": "方正字迹-杜慧田硬笔楷书简体"
+    },
+    {
+      "value": "FZQTJW.TTF",
+      "text": "方正启体简体"
+    },
+    {
+      "value": "upload",
+      "text": "上传字体"
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does this do?",
+      "answer": "Haha"
+    },
+    {
+      "question": "Which paper should I choose?",
+      "answer": "If ..."
+    }
+  ]
+}
