@@ -1,0 +1,113 @@
+{
+  "lang-name": "中文",
+  "base-title": "手写滚粗",
+  "nav": {
+    "home": "首页",
+    "faq": "常见问题",
+    "about": "关于"
+  },
+  "tab": {
+    "general": "基本设置",
+    "simulation": "“仿真”"
+  },
+  "language": "语言",
+  "label": {
+    "paper": "纸张",
+    "line-count": "行数",
+    "scale": "文本缩放",
+    "color": "文本颜色",
+    "char-space": "字间距",
+    "font": "字体",
+    "upload-font": "上传字体",
+    "shadow-offset": "文本阴影偏移",
+    "shadow-radius": "文本阴影半径",
+    "shadow-color": "文本阴影颜色",
+    "blur": "文本模糊半径",
+    "opacity": "文本不透明度",
+    "rotation": "纸张最大随机旋转角度",
+    "beginning-offset": "行起始随机偏移",
+    "distortion": "文字扭曲",
+    "horizontal-offset": "文字水平随机偏移",
+    "vertical-offset": "文字竖直随机偏移"
+  },
+  "placeholder": {
+    "input-here": "在这里输入文本",
+    "choose-font": "选择或拖过来一个字体文件",
+    "drop-font-here": "拖到这里"
+  },
+  "generate": "生成",
+  "download-pdf": "下载 PDF",
+  "in-developing": "正在开发",
+  "random-prompt": [
+    "第一次使用需要从服务器下载字体，请耐心等待。",
+    "支持上传字体（ttf, otf 等格式）。",
+    "有抄写的空，不如睡觉。",
+    "你有没有发现这里的文字每次都不一样呢？"
+  ],
+  "prompt": {
+    "loading-font": "加载字体...",
+    "loading-paper": "加载纸张...",
+    "generating": "生成页面...（当前页面：{count}）"
+  },
+  "alert": {
+    "text-not-supported": "文字尺寸不支持！",
+    "no-text-input": "请输入文本！",
+    "no-font-uploaded": "没有上传字体！",
+    "not-a-font-file": "错误的字体文件！"
+  },
+  "about": "本项目开源（MIT），查看源码：<a target='_blank' href='https://github.com/yusanshi/handwriting-go-away'>Github</a>。",
+  "paper": [
+    {
+      "value": "A5-photo-line-vertical",
+      "text": "A5 照片 带线 竖直"
+    },
+    {
+      "value": "A4-source-line-vertical",
+      "text": "A4 原图 带线 竖直"
+    },
+    {
+      "value": "A4-source-noline-vertical",
+      "text": "A4 原图 无线 竖直"
+    }
+  ],
+  "font": [
+    {
+      "value": "FZZJ-WXCZTJW.TTF",
+      "text": "方正手迹-王潇趁早体 简"
+    },
+    {
+      "value": "FZSJ-GBQSJW.TTF",
+      "text": "方正手迹-告白情书"
+    },
+    {
+      "value": "FZSJ-SGLDXMHJW.TTF",
+      "text": "方正手迹-时光里的小美好"
+    },
+    {
+      "value": "FZSJ-WSMQSJW.TTF",
+      "text": "方正手迹-未署名情书 简"
+    },
+    {
+      "value": "FZZJ-DHTYBKSJW.TTF",
+      "text": "方正字迹-杜慧田硬笔楷书简体"
+    },
+    {
+      "value": "FZQTJW.TTF",
+      "text": "方正启体简体"
+    },
+    {
+      "value": "upload",
+      "text": "上传字体"
+    }
+  ],
+  "faq": [
+    {
+      "question": "这个网站是做什么的",
+      "answer": "巴啦啦能量---沙罗沙罗---小魔仙---全身变！"
+    },
+    {
+      "question": "我该如何选择纸张",
+      "answer": "巴啦啦能量---沙沙卡拉---魔仙显示器！"
+    }
+  ]
+}
