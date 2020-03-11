@@ -15,7 +15,7 @@
 // }
 
 export default {
-  'A4-original-line-vertical': {
+  'A4-source-line-vertical': {
     target_foramt: 'a4',
     width: 210,
     height: 297,
@@ -30,7 +30,7 @@ export default {
     },
     default_font_size: 75,
   },
-  'A4-original-noline-vertical': {
+  'A4-source-noline-vertical': {
     target_foramt: 'a4',
     width: 210,
     height: 297,

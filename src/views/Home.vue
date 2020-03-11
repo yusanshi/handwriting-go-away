@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Navbar class="mb-3" />
-    <HomeBody class="mb-3" />
+    <Navbar class="mb-3 mb-sm-4" />
+    <HomeBody class="mb-3 px-3 px-sm-4" />
   </div>
 </template>
 

@@ -1,5 +1,5 @@
-src/assets/fonts/*
-!src/assets/fonts/.gitkeep
+public/fonts/*
+!public/fonts/.gitkeep
 package-lock.json
 
 .DS_Store

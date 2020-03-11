@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import { BootstrapVue } from 'bootstrap-vue';
 import VueI18n from 'vue-i18n';
 import VueMeta from 'vue-meta';
 import App from './App.vue';
@@ -12,7 +12,6 @@ import zh from './locales/zh.json';
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
 Vue.use(VueI18n);
 Vue.use(VueMeta);
 

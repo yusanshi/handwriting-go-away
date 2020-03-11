@@ -25,3 +25,4 @@ add return to top
 toggle language use funcition instead of ?lng
 support docx, txt and markdown
 flash border when appearing or disappearing
+remove unused packages

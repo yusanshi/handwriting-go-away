@@ -38,17 +38,22 @@
   "generate": "Generate",
   "download-pdf": "Download PDF",
   "in-developing": "still in developing",
+  "random-prompt": [
+    "Wait patiently as it takes some time to download font files.",
+    "Custom fonts are supported (ttf, otf...).",
+    "Don't let me write by hand, I'd rather sleep.",
+    "Have you found that the text here is changing every time page reloading?"
+  ],
   "prompt": {
-    "wait": "Wait patiently as it takes some time to download font files.",
     "loading-font": "Loading font...",
     "loading-paper": "Loading paper...",
-    "generating": "Generating pages... (Current page: )"
+    "generating": "Generating pages... (Current page: {count})"
   },
   "alert": {
-    "text-size-not-supported": "Text size not supported!",
+    "text-not-supported": "Text size not supported!",
     "no-text-input": "Please input the text!",
     "no-font-uploaded": "No font uploaded!",
-    "wrong-font-file": "Wrong font file!"
+    "not-a-font-file": "Wrong font file!"
   },
   "about": "This is an open-source project (MIT). View source on <a target='_blank' href='https://github.com/yusanshi/handwriting-go-away'>Github</a>.",
   "paper": [

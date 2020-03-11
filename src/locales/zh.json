@@ -38,17 +38,22 @@
   "generate": "生成",
   "download-pdf": "下载 PDF",
   "in-developing": "正在开发",
+  "random-prompt": [
+    "第一次使用需要从服务器下载字体，请耐心等待。",
+    "支持上传字体（ttf, otf 等格式）。",
+    "有抄写的空，不如睡觉。",
+    "你有没有发现这里的文字每次都不一样呢？"
+  ],
   "prompt": {
-    "wait": "第一次使用需要从服务器下载字体，请耐心等待。",
     "loading-font": "加载字体...",
     "loading-paper": "加载纸张...",
-    "generating": "生成页面...（当前页面：）"
+    "generating": "生成页面...（当前页面：{count}）"
   },
   "alert": {
-    "text-size-not-supported": "文字尺寸不支持！",
+    "text-not-supported": "文字尺寸不支持！",
     "no-text-input": "请输入文本！",
     "no-font-uploaded": "没有上传字体！",
-    "wrong-font-file": "错误的字体文件！"
+    "not-a-font-file": "错误的字体文件！"
   },
   "about": "本项目开源（MIT），查看源码：<a target='_blank' href='https://github.com/yusanshi/handwriting-go-away'>Github</a>。",
   "paper": [

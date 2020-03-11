@@ -11,6 +11,8 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.6.0",
     "core-js": "^3.6.4",
+    "jspdf": "^1.5.3",
+    "pdfjs-dist": "^2.2.228",
     "vue": "^2.6.11",
     "vue-i18n": "^8.15.4",
     "vue-meta": "^2.3.3",
