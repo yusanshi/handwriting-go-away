@@ -25,6 +25,7 @@ import Control from './Control.vue';
 import Preview from './Preview.vue';
 import State from '../utils/state';
 import paperConfig from '../../public/papers/config';
+import randomString from '../utils/random';
 
 export default {
   name: 'HomeBody',
@@ -68,38 +69,34 @@ export default {
         / (realLineCount - 1);
 
       this.loadingPrompt = this.$t('prompt.loading-font');
-      let fontName;
       let fontUrl;
       if (form.font === 'upload') {
-        fontName = form.uploadFont.name;
         fontUrl = URL.createObjectURL(form.uploadFont);
       } else {
-        fontName = form.font;
         fontUrl = `./fonts/${form.font}`;
       }
+      const fontName = randomString(6);
 
       const fontRep = `${parseInt(
         (this.currentConfig.default_font_size * form.textScale) / 100,
         10,
       )}px "${fontName}"`;
 
+      try {
+        const fontLoaded = await new FontFace(
+          fontName,
+          `url("${fontUrl}")`,
+        ).load();
+        document.fonts.add(fontLoaded);
+      } catch (err) {
+        this.state = State.BEGIN;
+        this.customAlert(this.$t('alert.not-a-font-file'));
+        return;
+      }
       if (!document.fonts.check(fontRep)) {
-        try {
-          const fontLoaded = await new FontFace(
-            fontName,
-            `url("${fontUrl}")`,
-          ).load();
-          document.fonts.add(fontLoaded);
-        } catch (err) {
-          this.state = State.BEGIN;
-          this.customAlert(this.$t('alert.not-a-font-file'));
-          return;
-        }
-        if (!document.fonts.check(fontRep)) {
-          this.state = State.BEGIN;
-          this.customAlert(this.$t('alert.text-not-supported'));
-          return;
-        }
+        this.state = State.BEGIN;
+        this.customAlert(this.$t('alert.text-not-supported'));
+        return;
       }
 
       this.loadingPrompt = this.$t('prompt.loading-paper');
@@ -216,13 +213,13 @@ export default {
               * 2
               * (horizontalOffset / 100)
               * canvas.width
-              * (isSingle ? 0.5 : 1),
+              * (isSingle ? 0.7 : 1),
           y
             + (Math.random() - 0.5)
               * 2
               * (verticalOffset / 100)
               * canvas.height
-              * (isSingle ? 0.5 : 1),
+              * (isSingle ? 0.7 : 1),
         );
         currentOffset
           += ctx.measureText(text[i]).width
