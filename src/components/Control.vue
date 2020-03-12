@@ -64,7 +64,12 @@
           </b-col>
           <b-col sm="6" lg="12" xl="6">
             <b-form-group :label="$t('label.char-space')">
-              <b-form-input v-model="form.charSpace" :disabled="true"></b-form-input>
+              <b-input-group append="%">
+                <b-form-input
+                  v-model="form.charSpace"
+                  :disabled="true"
+                ></b-form-input>
+              </b-input-group>
             </b-form-group>
           </b-col>
         </b-row>
@@ -103,7 +108,11 @@
           <b-col sm="6" lg="12" xl="6">
             <b-form-group :label="$t('label.blur')">
               <b-input-group append="px">
-                <b-form-input v-model="form.blur" type="number"></b-form-input>
+                <b-form-input
+                  v-model="form.blur"
+                  type="number"
+                  step="0.1"
+                ></b-form-input>
               </b-input-group>
             </b-form-group>
           </b-col>
@@ -133,6 +142,7 @@
                 <b-form-input
                   v-model="form.beginningOffset"
                   type="number"
+                  step="0.1"
                 ></b-form-input>
               </b-input-group>
             </b-form-group>
@@ -140,21 +150,30 @@
           <b-col sm="6" lg="12" xl="6">
             <b-form-group :label="$t('label.distortion')">
               <b-input-group append="%">
-                <b-form-input v-model="form.distortion" :disabled="true"></b-form-input>
+                <b-form-input
+                  v-model="form.distortion"
+                  :disabled="true"
+                ></b-form-input>
               </b-input-group>
             </b-form-group>
           </b-col>
           <b-col sm="6" lg="12" xl="6">
             <b-form-group :label="$t('label.horizontal-offset')">
               <b-input-group append="%">
-                <b-form-input v-model="form.horizontalOffset" :disabled="true"></b-form-input>
+                <b-form-input
+                  v-model="form.horizontalOffset"
+                  :disabled="true"
+                ></b-form-input>
               </b-input-group>
             </b-form-group>
           </b-col>
           <b-col sm="6" lg="12" xl="6">
             <b-form-group :label="$t('label.vertical-offset')">
               <b-input-group append="%">
-                <b-form-input v-model="form.verticalOffset" :disabled="true"></b-form-input>
+                <b-form-input
+                  v-model="form.verticalOffset"
+                  :disabled="true"
+                ></b-form-input>
               </b-input-group>
             </b-form-group>
           </b-col>
