@@ -47,6 +47,7 @@
   "prompt": {
     "loading-font": "加载字体...",
     "loading-paper": "加载纸张...",
+    "typesetting": "排版...",
     "generating": "生成页面...（当前页面：{count}）"
   },
   "alert": {

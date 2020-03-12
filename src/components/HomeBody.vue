@@ -106,15 +106,23 @@ export default {
       const loadingTask = pdfjsLib.getDocument(`./papers/${form.paper}.pdf`);
       const page = await loadingTask.promise.then((pdf) => pdf.getPage(1));
 
-      let pageCount = 0;
-      let currentText = form.text;
-      while (currentText.length !== 0) {
-        pageCount += 1;
-        this.loadingPrompt = this.$t('prompt.generating', { count: pageCount });
+      this.loadingPrompt = this.$t('prompt.typesetting');
+      const tempCanvas = document.createElement('canvas');
+      const tempCtx = tempCanvas.getContext('2d');
+      tempCanvas.width = this.currentConfig.width * 10;
+      tempCanvas.height = this.currentConfig.height * 10;
+      tempCtx.font = fontRep;
+      const textLines = tempCtx.typesetText(
+        form.text,
+        form.charSpace,
+        lineWidth,
+      );
+
+      for (let i = 0, j = 1; i < textLines.length; i += realLineCount, j += 1) {
+        this.loadingPrompt = this.$t('prompt.generating', { count: j });
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-
         canvas.width = this.currentConfig.width * 10;
         canvas.height = this.currentConfig.height * 10;
         ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -144,52 +152,28 @@ export default {
         ctx.textBaseline = 'bottom';
         ctx.filter = `blur(${form.blur}px) opacity(${form.opacity}%) drop-shadow(${form.shadowOffset}px ${form.shadowOffset}px ${form.shadowRadius}px ${form.shadowColor})`;
 
-        let consumed = 0;
-        for (
-          let currentLine = 0;
-          currentLine < realLineCount && consumed < currentText.length;
-          currentLine += 1
-        ) {
-          let lineConsumed = 0;
-          // eslint-disable-next-line
-          while (true) {
-            if (
-              ctx.measureText(
-                currentText.slice(consumed, consumed + lineConsumed + 1),
-              ).width
-                > lineWidth * canvas.width
-              || consumed + lineConsumed >= currentText.length
-            ) {
-              const newLinePostion = currentText
-                .slice(consumed, consumed + lineConsumed)
-                .indexOf('\n');
-              if (newLinePostion !== -1) {
-                lineConsumed = newLinePostion + 1;
-              }
-              break;
-            } else {
-              lineConsumed += 1;
-            }
-          }
-
-          ctx.fillText(
-            currentText.slice(consumed, consumed + lineConsumed),
+        textLines.slice(i, i + realLineCount).forEach((lineString, index) => {
+          ctx.fillTextExtended(
+            lineString,
             (this.currentConfig.start.x
               + (Math.random() * form.beginningOffset) / 100)
               * canvas.width,
-            (this.currentConfig.start.y + currentLine * lineHeight)
-              * canvas.height,
+            (this.currentConfig.start.y + index * lineHeight) * canvas.height,
+            form.charSpace,
+            form.distortion,
+            form.horizontalOffset,
+            form.verticalOffset,
           );
-          consumed += lineConsumed;
-        }
+        });
         this.generatedCanvas.push(canvas);
-        currentText = currentText.slice(consumed, currentText.length);
       }
+
       if (form.font === 'upload') {
         URL.revokeObjectURL(fontUrl);
       }
       this.state = State.FINISH;
     },
+
     download() {
       // eslint-disable-next-line new-cap
       const pdf = new jsPDF({ format: this.currentConfig.target_foramt });
@@ -207,6 +191,100 @@ export default {
       });
       pdf.save('download.pdf');
     },
+  },
+  mounted() {
+    CanvasRenderingContext2D.prototype.fillTextExtended = function fillTextExtended(
+      text,
+      x,
+      y,
+      charSpace,
+      distortion,
+      horizontalOffset,
+      verticalOffset,
+    ) {
+      // Draw single line of text from start (x, y)
+      const ctx = this;
+      const { canvas } = ctx;
+      let currentOffset = 0;
+      for (let i = 0; i < text.length; i += 1) {
+        const isSingle = new TextEncoder().encode(text[i]).length === 1;
+        ctx.fillText(
+          text[i],
+          x
+            + currentOffset
+            + (Math.random() - 0.5)
+              * 2
+              * (horizontalOffset / 100)
+              * canvas.width
+              * (isSingle ? 0.5 : 1),
+          y
+            + (Math.random() - 0.5)
+              * 2
+              * (verticalOffset / 100)
+              * canvas.height
+              * (isSingle ? 0.5 : 1),
+        );
+        currentOffset
+          += ctx.measureText(text[i]).width
+          + (charSpace / 100) * canvas.width
+          + (isSingle ? (Math.abs(charSpace) / 1.333 / 100) * canvas.width : 0);
+      }
+    };
+
+    CanvasRenderingContext2D.prototype.measureTextExtended = function measureTextExtended(
+      text,
+      charSpace,
+    ) {
+      // Measure text width based on charSpace
+      const originalValue = this.measureText(text);
+      if (text === '') {
+        return originalValue;
+      }
+      const singleNum = Array.from(text).filter(
+        (e) => new TextEncoder().encode(e).length === 1,
+      ).length;
+      return {
+        width:
+          originalValue.width
+          + (text.length - 1) * (charSpace / 100) * this.canvas.width
+          + singleNum * (Math.abs(charSpace) / 1.333 / 100) * this.canvas.width,
+      };
+    };
+
+    CanvasRenderingContext2D.prototype.typesetText = function typesetText(
+      text,
+      charSpace,
+      lineWidth,
+    ) {
+      // return an array of string, each element stands for a line
+      // text: String, charSpace: Number(%), lineWidth: Number(%)
+      const ctx = this;
+      const { canvas } = ctx;
+      const returnValue = [];
+      let consumed = 0;
+      while (consumed < text.length) {
+        let lineConsumed = 0;
+        while (
+          ctx.measureTextExtended(
+            text.slice(consumed, consumed + lineConsumed + 1),
+            charSpace,
+          ).width
+            <= lineWidth * canvas.width
+          && consumed + lineConsumed < text.length
+        ) {
+          lineConsumed += 1;
+        }
+        const newLinePostion = text
+          .slice(consumed, consumed + lineConsumed)
+          .indexOf('\n');
+        if (newLinePostion !== -1) {
+          lineConsumed = newLinePostion + 1;
+        }
+        returnValue.push(text.slice(consumed, consumed + lineConsumed));
+        consumed += lineConsumed;
+      }
+      return returnValue;
+    };
   },
 };
 </script>

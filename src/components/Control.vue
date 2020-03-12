@@ -25,6 +25,7 @@
               <b-form-input
                 v-model="form.lineCount"
                 type="number"
+                min="2"
               ></b-form-input>
             </b-form-group>
           </b-col>
@@ -51,6 +52,7 @@
               <b-form-input
                 v-model="form.textScale"
                 type="number"
+                min="1"
               ></b-form-input>
             </b-form-group>
           </b-col>
@@ -67,7 +69,8 @@
               <b-input-group append="%">
                 <b-form-input
                   v-model="form.charSpace"
-                  :disabled="true"
+                  type="number"
+                  step="0.05"
                 ></b-form-input>
               </b-input-group>
             </b-form-group>
@@ -93,6 +96,7 @@
                 <b-form-input
                   v-model="form.shadowRadius"
                   type="number"
+                  min="0"
                 ></b-form-input>
               </b-input-group>
             </b-form-group>
@@ -111,7 +115,8 @@
                 <b-form-input
                   v-model="form.blur"
                   type="number"
-                  step="0.1"
+                  step="0.05"
+                  min="0"
                 ></b-form-input>
               </b-input-group>
             </b-form-group>
@@ -122,6 +127,8 @@
                 <b-form-input
                   v-model="form.opacity"
                   type="number"
+                  min="0"
+                  max="100"
                 ></b-form-input>
               </b-input-group>
             </b-form-group>
@@ -132,6 +139,7 @@
                 <b-form-input
                   v-model="form.paperRotation"
                   type="number"
+                  min="0"
                 ></b-form-input>
               </b-input-group>
             </b-form-group>
@@ -142,7 +150,8 @@
                 <b-form-input
                   v-model="form.beginningOffset"
                   type="number"
-                  step="0.1"
+                  step="0.05"
+                  min="0"
                 ></b-form-input>
               </b-input-group>
             </b-form-group>
@@ -162,7 +171,9 @@
               <b-input-group append="%">
                 <b-form-input
                   v-model="form.horizontalOffset"
-                  :disabled="true"
+                  type="number"
+                  step="0.05"
+                  min="0"
                 ></b-form-input>
               </b-input-group>
             </b-form-group>
@@ -172,7 +183,9 @@
               <b-input-group append="%">
                 <b-form-input
                   v-model="form.verticalOffset"
-                  :disabled="true"
+                  type="number"
+                  step="0.05"
+                  min="0"
                 ></b-form-input>
               </b-input-group>
             </b-form-group>
@@ -213,7 +226,7 @@ export default {
         lineCount: 22,
         textScale: 100,
         textColor: '#000000',
-        charSpace: this.$t('in-developing'),
+        charSpace: -0.2,
         shadowOffset: 1,
         shadowRadius: 1,
         shadowColor: '#666666',
@@ -222,8 +235,8 @@ export default {
         paperRotation: 2,
         beginningOffset: 1.6,
         distortion: this.$t('in-developing'),
-        horizontalOffset: this.$t('in-developing'),
-        verticalOffset: this.$t('in-developing'),
+        horizontalOffset: 0.05,
+        verticalOffset: 0.15,
       },
     };
   },

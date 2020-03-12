@@ -47,6 +47,7 @@
   "prompt": {
     "loading-font": "Loading font...",
     "loading-paper": "Loading paper...",
+    "typesetting": "Typesetting...",
     "generating": "Generating pages... (Current page: {count})"
   },
   "alert": {
