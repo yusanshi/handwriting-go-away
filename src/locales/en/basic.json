@@ -97,17 +97,43 @@
     },
     {
       "value": "upload",
-      "text": "上传字体"
+      "text": "Upload a font"
     }
   ],
   "faq": [
     {
       "question": "What does this do?",
-      "answer": "Haha"
+      "answer": "Input text, adjust some parameters, then get \"realistic simulation\" file.\n\nLife is short. Don't waste time on something useless. \"Handwriting Go Away\". "
     },
     {
       "question": "Which paper should I choose?",
-      "answer": "If ..."
+      "answer": "Options with `Photo` mean that the paper is from a photo. Using this kind of papaers, you can use generated PDF files directly. A paper with `Source` has a white background color. Choose this if you'll print the PDF file.\n\nIf a `Noline` paper is chosen, you'll need to specify the line numbers.\n\n Currently custom margin is not supported. More papers will be added in the future."
+    },
+    {
+      "question": "How to upload custom font?",
+      "answer": "Custom font will be available if you have chosen `Upload a font` in `Font` section. Common font formats are supported (ttf, otf...)."
+    },
+    {
+      "question": "Are formulas supported?",
+      "answer": "Nope. Only plain text is supported."
+    },
+    {
+      "question": "What if my file is a Word/PDF file?",
+      "answer": "Please open them and copy text manually."
+    },
+    {
+      "question": "Why does UI lag while generating?",
+      "answer": "This website has no server side. All is done in your browser. Since customizing letter space, character horizontal or vertical offset was supported, text is rendered one by one instead of line by line, which leads to a bigger computation burden.\n\nSeems like I can't optimize it due to a limited ability."
+    }
+  ],
+  "donate": [
+    {
+      "name": "Alipay",
+      "QRCode": "https://qr.alipay.com/fkx118330mvtajwnizwmg8e"
+    },
+    {
+      "name": "WeChat",
+      "QRCode": "wxp://f2f0-yDFuk4EnpX8slB5evGC8dfRtnn--DZ3"
     }
   ]
 }
