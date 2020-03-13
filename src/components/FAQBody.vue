@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <div>
     <b-card
       :title="`${index + 1}. ${item.question}`"
       v-for="(item, index) in $t('faq')"
@@ -8,7 +8,7 @@
     >
       <div v-html="compiledMarkdown(item.answer)"></div>
     </b-card>
-  </b-container>
+  </div>
 </template>
 
 <script>

@@ -10,8 +10,9 @@ import App from './App.vue';
 import router from './router';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import en from './locales/en/basic.json';
-import zh from './locales/zh/basic.json';
+import en from './locales/en/main.json';
+import zh from './locales/zh/main.json';
+import getLang from './utils/getLang';
 
 Vue.config.productionTip = false;
 
@@ -29,7 +30,7 @@ const messages = {
 };
 
 const i18n = new VueI18n({
-  locale: localStorage.getItem('lang') || 'zh',
+  locale: localStorage.getItem('lang') || getLang(Object.keys(messages)) || 'zh',
   messages,
 });
 

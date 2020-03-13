@@ -11,10 +11,14 @@
 
 但是由于我没有强大的服务器，所以不太想在服务端弄（虽然那样的话，用 Python 应该更方便），那就用 JavaScript 吧。后来第一个版本完成之后，又想到最近我们软件工程课刚学了 Vue.js，正好练练手，于是就用 Vue.js 重构，又加了些其他东西。
 
+<br>
+
 # 源码
 ---
 
 本项目开源（MIT），查看源码：[Github](https://github.com/yusanshi/handwriting-go-away)。
+
+<br>
 
 # 捐赠
 ---

@@ -139,6 +139,7 @@
                   v-model="form.paperRotation"
                   type="number"
                   min="0"
+                  max="89"
                 ></b-form-input>
               </b-input-group>
             </b-form-group>

@@ -1,21 +1,19 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col lg="5" class="mb-4"
-        ><Control
-          @generate="generate"
-          @download="download"
-          :downloadDisabled="state !== State.FINISH"
-        />
-      </b-col>
-      <b-col lg="7"
-        ><Preview
-          :state="state"
-          :loadingPrompt="loadingPrompt"
-          :allCanvas="generatedCanvas"
-      /></b-col>
-    </b-row>
-  </b-container>
+  <b-row>
+    <b-col lg="5" class="mb-4"
+      ><Control
+        @generate="generate"
+        @download="download"
+        :downloadDisabled="state !== State.FINISH"
+      />
+    </b-col>
+    <b-col lg="7"
+      ><Preview
+        :state="state"
+        :loadingPrompt="loadingPrompt"
+        :allCanvas="generatedCanvas"
+    /></b-col>
+  </b-row>
 </template>
 
 <script>

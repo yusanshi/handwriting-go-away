@@ -1,9 +1,7 @@
 <template>
-  <b-container>
-    <b-card>
-      <div v-html="compiledMarkdown"></div>
-    </b-card>
-  </b-container>
+  <b-card>
+    <div v-html="compiledMarkdown"></div>
+  </b-card>
 </template>
 
 <script>
