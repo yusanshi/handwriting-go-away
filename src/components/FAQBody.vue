@@ -6,15 +6,20 @@
       :key="item.question"
       class="mb-3"
     >
-      <b-card-text>
-        {{ item.answer }}
-      </b-card-text>
+      <div v-html="compiledMarkdown(item.answer)"></div>
     </b-card>
   </b-container>
 </template>
 
 <script>
+import marked from 'marked';
+
 export default {
   name: 'HomeBody',
+  methods: {
+    compiledMarkdown(text) {
+      return marked(text);
+    },
+  },
 };
 </script>

@@ -39,7 +39,6 @@
           </b-col>
           <b-col sm="6" lg="12" xl="6" v-show="form.font === 'upload'">
             <b-form-group :label="$t('label.upload-font')">
-              <!-- TODO accept= -->
               <b-form-file
                 :placeholder="$t('placeholder.choose-font')"
                 :drop-placeholder="$t('placeholder.drop-font-here')"

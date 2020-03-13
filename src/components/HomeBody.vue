@@ -26,6 +26,10 @@ import Preview from './Preview.vue';
 import State from '../utils/state';
 import paperConfig from '../../public/papers/config';
 import randomString from '../utils/random';
+import '../utils/wrapper';
+// eslint-disable-next-line
+import PDFJSWorker from 'file-loader!pdfjs-dist/build/pdf.worker.min.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJSWorker;
 
 export default {
   name: 'HomeBody',
@@ -188,100 +192,6 @@ export default {
       });
       pdf.save('download.pdf');
     },
-  },
-  mounted() {
-    CanvasRenderingContext2D.prototype.fillTextExtended = function fillTextExtended(
-      text,
-      x,
-      y,
-      charSpace,
-      distortion,
-      horizontalOffset,
-      verticalOffset,
-    ) {
-      // Draw single line of text from start (x, y)
-      const ctx = this;
-      const { canvas } = ctx;
-      let currentOffset = 0;
-      for (let i = 0; i < text.length; i += 1) {
-        const isSingle = new TextEncoder().encode(text[i]).length === 1;
-        ctx.fillText(
-          text[i],
-          x
-            + currentOffset
-            + (Math.random() - 0.5)
-              * 2
-              * (horizontalOffset / 100)
-              * canvas.width
-              * (isSingle ? 0.7 : 1),
-          y
-            + (Math.random() - 0.5)
-              * 2
-              * (verticalOffset / 100)
-              * canvas.height
-              * (isSingle ? 0.7 : 1),
-        );
-        currentOffset
-          += ctx.measureText(text[i]).width
-          + (charSpace / 100) * canvas.width
-          + (isSingle ? (Math.abs(charSpace) / 1.333 / 100) * canvas.width : 0);
-      }
-    };
-
-    CanvasRenderingContext2D.prototype.measureTextExtended = function measureTextExtended(
-      text,
-      charSpace,
-    ) {
-      // Measure text width based on charSpace
-      const originalValue = this.measureText(text);
-      if (text === '') {
-        return originalValue;
-      }
-      const singleNum = Array.from(text).filter(
-        (e) => new TextEncoder().encode(e).length === 1,
-      ).length;
-      return {
-        width:
-          originalValue.width
-          + (text.length - 1) * (charSpace / 100) * this.canvas.width
-          + singleNum * (Math.abs(charSpace) / 1.333 / 100) * this.canvas.width,
-      };
-    };
-
-    CanvasRenderingContext2D.prototype.typesetText = function typesetText(
-      text,
-      charSpace,
-      lineWidth,
-    ) {
-      // return an array of string, each element stands for a line
-      // text: String, charSpace: Number(%), lineWidth: Number(%)
-      const ctx = this;
-      const { canvas } = ctx;
-      const returnValue = [];
-      let consumed = 0;
-      while (consumed < text.length) {
-        let lineConsumed = 0;
-        while (
-          ctx.measureTextExtended(
-            text.slice(consumed, consumed + lineConsumed + 1),
-            charSpace,
-          ).width
-            <= lineWidth * canvas.width
-          && consumed + lineConsumed < text.length
-        ) {
-          lineConsumed += 1;
-        }
-        const newLinePostion = text
-          .slice(consumed, consumed + lineConsumed)
-          .indexOf('\n');
-        if (newLinePostion !== -1) {
-          lineConsumed = newLinePostion + 1;
-        }
-        returnValue.push(text.slice(consumed, consumed + lineConsumed));
-        consumed += lineConsumed;
-      }
-      return returnValue;
-    };
   },
 };
 </script>
