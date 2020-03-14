@@ -3,7 +3,7 @@
     <Navbar class="mb-3 mb-sm-4" />
     <b-container class="px-sm-4 px-xl-5" fluid>
       <HomeBody class="mb-4"/>
-      <Footer />
+      <Footer class="mb-4"/>
     </b-container>
   </div>
 </template>

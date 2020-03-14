@@ -2,10 +2,8 @@ import Vue from 'vue';
 import { BootstrapVue } from 'bootstrap-vue';
 import VueI18n from 'vue-i18n';
 import VueMeta from 'vue-meta';
-/* eslint-disable */
-import zhAbout from 'raw-loader!./locales/zh/about.md';
-import enAbout from 'raw-loader!./locales/en/about.md';
-/* eslint-enable */
+import zhAbout from 'raw-loader!./locales/zh/about.md'; // eslint-disable-line
+import enAbout from 'raw-loader!./locales/en/about.md'; // eslint-disable-line
 import App from './App.vue';
 import router from './router';
 import 'bootstrap/dist/css/bootstrap.css';

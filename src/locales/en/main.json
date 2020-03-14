@@ -48,13 +48,13 @@
     "loading-font": "Loading font...",
     "loading-paper": "Loading paper...",
     "typesetting": "Typesetting...",
-    "generating": "Generating pages... (Current page: {count})"
+    "generating": "Generating pages..."
   },
   "alert": {
-    "text-not-supported": "Text size not supported!",
+    "font-not-supported": "Font not supported!",
     "no-text-input": "Please input the text!",
     "no-font-uploaded": "No font uploaded!",
-    "not-a-font-file": "Wrong font file!"
+    "not-a-font-file": "Not a font file!"
   },
   "paper": [
     {

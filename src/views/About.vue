@@ -2,8 +2,8 @@
   <div>
     <Navbar class="mb-3 mb-sm-4" />
     <b-container>
-      <AboutBody class="mb-4"/>
-      <Footer />
+      <AboutBody class="mb-4" />
+      <Footer class="mb-4" />
     </b-container>
   </div>
 </template>

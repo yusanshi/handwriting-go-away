@@ -48,13 +48,13 @@
     "loading-font": "加载字体...",
     "loading-paper": "加载纸张...",
     "typesetting": "排版...",
-    "generating": "生成页面...（当前页面：{count}）"
+    "generating": "生成页面..."
   },
   "alert": {
-    "text-not-supported": "文字尺寸不支持！",
+    "font-not-supported": "不支持该字体！",
     "no-text-input": "请输入文本！",
     "no-font-uploaded": "没有上传字体！",
-    "not-a-font-file": "错误的字体文件！"
+    "not-a-font-file": "不是字体文件！"
   },
   "paper": [
     {
