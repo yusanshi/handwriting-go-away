@@ -48,11 +48,13 @@
           </b-col>
           <b-col sm="6" lg="12" xl="6">
             <b-form-group :label="$t('label.scale')">
-              <b-form-input
-                v-model="form.textScale"
-                type="number"
-                min="1"
-              ></b-form-input>
+              <b-input-group append="%">
+                <b-form-input
+                  v-model="form.textScale"
+                  type="number"
+                  min="1"
+                ></b-form-input>
+              </b-input-group>
             </b-form-group>
           </b-col>
           <b-col sm="6" lg="12" xl="6">
