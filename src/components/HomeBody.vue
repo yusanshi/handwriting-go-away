@@ -1,27 +1,220 @@
 <template>
   <b-row>
-    <b-col lg="5" class="mb-4"
-      ><Control
-        @generate="generate"
-        @download="download"
-        :downloadDisabled="state !== State.FINISH"
-      />
+    <b-col lg="4" class="mb-4">
+      <b-form>
+        <b-tabs content-class="mt-3" class="mb-2" fill>
+          <b-tab :title="$t('tab.general')" active>
+            <b-row>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.paper')">
+                  <b-form-select
+                    v-model="form.paper"
+                    :options="$t('paper')"
+                  ></b-form-select>
+                </b-form-group>
+              </b-col>
+              <b-col
+                sm="6"
+                lg="12"
+                xl="6"
+                v-show="form.paper.includes('noline')"
+              >
+                <b-form-group :label="$t('label.line-count')">
+                  <b-form-input
+                    v-model="form.lineCount"
+                    type="number"
+                    min="2"
+                  ></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.font')">
+                  <b-form-select
+                    v-model="form.font"
+                    :options="$t('font')"
+                  ></b-form-select>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6" v-show="form.font === 'upload'">
+                <b-form-group :label="$t('label.upload-font')">
+                  <b-form-file
+                    :placeholder="$t('placeholder.choose-font')"
+                    :drop-placeholder="$t('placeholder.drop-font-here')"
+                    v-model="form.uploadFont"
+                  ></b-form-file>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.scale')">
+                  <b-input-group append="px">
+                    <b-form-input
+                      v-model="form.fontSize"
+                      type="number"
+                      min="1"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.color')">
+                  <b-form-input
+                    v-model="form.textColor"
+                    type="color"
+                  ></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.char-space')">
+                  <b-input-group append="%">
+                    <b-form-input
+                      v-model="form.charSpace"
+                      type="number"
+                      step="0.05"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+            </b-row>
+          </b-tab>
+
+          <b-tab :title="$t('tab.simulation')">
+            <b-row>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.shadow-offset')">
+                  <b-input-group append="px">
+                    <b-form-input
+                      v-model="form.shadowOffset"
+                      type="number"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.shadow-radius')">
+                  <b-input-group append="px">
+                    <b-form-input
+                      v-model="form.shadowRadius"
+                      type="number"
+                      min="0"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.shadow-color')">
+                  <b-form-input
+                    v-model="form.shadowColor"
+                    type="color"
+                  ></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.blur')">
+                  <b-input-group append="px">
+                    <b-form-input
+                      v-model="form.blur"
+                      type="number"
+                      step="0.05"
+                      min="0"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.opacity')">
+                  <b-input-group append="%">
+                    <b-form-input
+                      v-model="form.opacity"
+                      type="number"
+                      min="0"
+                      max="100"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.rotation')">
+                  <b-input-group append="°">
+                    <b-form-input
+                      v-model="form.paperRotation"
+                      type="number"
+                      min="0"
+                      max="89"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.beginning-offset')">
+                  <b-input-group append="%">
+                    <b-form-input
+                      v-model="form.beginningOffset"
+                      type="number"
+                      step="0.05"
+                      min="0"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.distortion')">
+                  <b-input-group append="%">
+                    <b-form-input
+                      v-model="form.distortion"
+                      :disabled="true"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.horizontal-offset')">
+                  <b-input-group append="%">
+                    <b-form-input
+                      v-model="form.horizontalOffset"
+                      type="number"
+                      step="0.05"
+                      min="0"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col sm="6" lg="12" xl="6">
+                <b-form-group :label="$t('label.vertical-offset')">
+                  <b-input-group append="%">
+                    <b-form-input
+                      v-model="form.verticalOffset"
+                      type="number"
+                      step="0.05"
+                      min="0"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+            </b-row>
+          </b-tab>
+        </b-tabs>
+        <!-- TODO Enter to configurate -->
+        <b-button size="lg" variant="primary" @click="configurate" class="mr-3">
+          {{ $t('configurate') }}</b-button
+        >
+        <b-button size="lg" variant="outline-primary" @click="download">
+          {{ $t('download-pdf') }}</b-button
+        >
+      </b-form>
     </b-col>
-    <b-col lg="7"
-      ><Preview
-        :state="state"
-        :loadingPrompt="loadingPrompt"
-        :allCanvas="generatedCanvas"
-    /></b-col>
+    <b-col lg="8">
+      <div id="display"></div>
+    </b-col>
   </b-row>
 </template>
 
 <script>
+/* eslint-disable no-unused-vars */
+// TODO
+
 import pdfjsLib from 'pdfjs-dist';
 import jsPDF from 'jspdf';
-import Control from './Control.vue';
-import Preview from './Preview.vue';
-import State from '../utils/state';
+import { fabric } from 'fabric';
 import paperConfig from '../../public/papers/config';
 import randomString from '../utils/random';
 import '../utils/wrapper';
@@ -30,15 +223,50 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJSWorker;
 
 export default {
   name: 'HomeBody',
-  components: { Control, Preview },
   data() {
     return {
-      state: State.BEGIN,
-      loadingPrompt: '',
-      State,
-      generatedCanvas: [],
-      currentConfig: null,
+      paperConfig: null,
+      form: {
+        font: this.$t('font')[0].value,
+        uploadFont: null,
+        paper: this.$t('paper')[0].value,
+        lineCount: 22,
+        fontSize: 25,
+        textColor: '#000000',
+        charSpace: -0.2,
+        shadowOffset: 1,
+        shadowRadius: 1,
+        shadowColor: '#666666',
+        blur: 0.6,
+        opacity: 75,
+        paperRotation: 2,
+        beginningOffset: 1.6,
+        distortion: this.$t('in-developing'),
+        horizontalOffset: 0.05,
+        verticalOffset: 0.15,
+      },
+      fabricCanvas: [],
     };
+  },
+  mounted() {
+    const canvasElem = document.createElement('canvas');
+    document.querySelector('#display').appendChild(canvasElem);
+    const canvas = new fabric.Canvas(canvasElem, {
+      width: 800,
+      height: 600,
+    });
+    const textBox = new fabric.Textbox(
+      '配置完成后，双击这里直接编辑你的文字。',
+      {
+        top: 50,
+        left: 50,
+        width: 700,
+        fontSize: 25,
+        splitByGrapheme: true,
+      },
+    );
+    canvas.add(textBox);
+    this.fabricCanvas.push(canvas);
   },
   methods: {
     customAlert(message) {
@@ -49,138 +277,12 @@ export default {
         autoHideDelay: 1500,
       });
     },
-    async generate(form) {
-      if (form.text === '') {
-        this.customAlert(this.$t('alert.no-text-input'));
-        return;
-      }
-      if (form.font === 'upload' && form.uploadFont === null) {
-        this.customAlert(this.$t('alert.no-font-uploaded'));
-        return;
-      }
 
-      this.state = State.LOADING;
-      this.generatedCanvas = [];
-      this.currentConfig = paperConfig[form.paper];
-      const realLineCount = form.paper.includes('noline')
-        ? form.lineCount
-        : this.currentConfig.line_count;
-      const lineWidth = this.currentConfig.end.x - this.currentConfig.start.x;
-      const lineHeight = (this.currentConfig.end.y - this.currentConfig.start.y)
-        / (realLineCount - 1);
-
-      this.loadingPrompt = this.$t('prompt.loading-font');
-      let fontUrl;
-      if (form.font === 'upload') {
-        fontUrl = URL.createObjectURL(form.uploadFont);
-      } else {
-        fontUrl = `./fonts/${form.font}`;
-      }
-      const fontName = randomString(6);
-
-      const fontRep = `${parseInt(
-        (this.currentConfig.default_font_size * form.textScale) / 100,
-        10,
-      )}px "${fontName}"`;
-
-      try {
-        const fontLoaded = await new FontFace(
-          fontName,
-          `url("${fontUrl}")`,
-        ).load();
-        document.fonts.add(fontLoaded);
-      } catch (err) {
-        this.state = State.BEGIN;
-        this.customAlert(this.$t('alert.not-a-font-file'));
-        return;
-      }
-      if (!document.fonts.check(fontRep)) {
-        this.state = State.BEGIN;
-        this.customAlert(this.$t('alert.font-not-supported'));
-        return;
-      }
-
-      this.loadingPrompt = this.$t('prompt.loading-paper');
-      const loadingTask = pdfjsLib.getDocument(`./papers/${form.paper}.pdf`);
-      const page = await loadingTask.promise.then((pdf) => pdf.getPage(1));
-
-      this.loadingPrompt = this.$t('prompt.typesetting');
-      const tempCanvas = document.createElement('canvas');
-      const tempCtx = tempCanvas.getContext('2d');
-      tempCanvas.width = this.currentConfig.width * 10;
-      tempCanvas.height = this.currentConfig.height * 10;
-      tempCtx.font = fontRep;
-      const textLines = tempCtx.typesetText(
-        form.text,
-        form.charSpace,
-        lineWidth,
-      );
-
-      this.loadingPrompt = this.$t('prompt.generating');
-
-      const tasks = [];
-      for (let i = 0, j = 0; i < textLines.length; i += realLineCount, j += 1) {
-        const task = new Promise((resolve) => {
-          setTimeout(async () => {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = this.currentConfig.width * 10;
-            canvas.height = this.currentConfig.height * 10;
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-            const radian = ((Math.random() - 0.5) * 2 * form.paperRotation * Math.PI) / 180;
-            ctx.rotate(radian);
-            const radianAbs = Math.abs(radian);
-            let k = canvas.height / canvas.width;
-            if (k > 1) {
-              k = 1 / k;
-            }
-            const factor = (Math.tan(radianAbs) / k + 1) * Math.cos(radianAbs);
-            ctx.scale(factor, factor);
-            ctx.translate(-canvas.width / 2, -canvas.height / 2);
-            const viewport = page.getViewport({ scale: 1 });
-            const scale = canvas.width / viewport.width;
-            const scaledViewport = page.getViewport({ scale });
-
-            const renderContext = {
-              canvasContext: ctx,
-              viewport: scaledViewport,
-            };
-            // eslint-disable-next-line no-await-in-loop
-            await page.render(renderContext).promise;
-
-            ctx.font = fontRep;
-            ctx.fillStyle = form.textColor;
-            ctx.textBaseline = 'bottom';
-            ctx.filter = `blur(${form.blur}px) opacity(${form.opacity}%) drop-shadow(${form.shadowOffset}px ${form.shadowOffset}px ${form.shadowRadius}px ${form.shadowColor})`;
-
-            textLines
-              .slice(i, i + realLineCount)
-              .forEach((lineString, index) => {
-                ctx.fillTextExtended(
-                  lineString,
-                  (this.currentConfig.start.x
-                    + (Math.random() * form.beginningOffset) / 100)
-                    * canvas.width,
-                  (this.currentConfig.start.y + index * lineHeight)
-                    * canvas.height,
-                  form.charSpace,
-                  form.distortion,
-                  form.horizontalOffset,
-                  form.verticalOffset,
-                );
-              });
-            this.generatedCanvas[j] = canvas;
-            resolve();
-          }, 0);
-        });
-        tasks.push(task);
-      }
-
-      Promise.all(tasks).then(() => {
-        if (form.font === 'upload') {
-          URL.revokeObjectURL(fontUrl);
-        }
-        this.state = State.FINISH;
+    configurate() {
+      this.fabricCanvas.forEach((canvas) => {
+        const textBox = canvas.item(0);
+        textBox.set({ fontSize: parseInt(this.form.fontSize, 10) });
+        canvas.renderAll();
       });
     },
 
@@ -204,3 +306,10 @@ export default {
   },
 };
 </script>
+
+
+<style>
+canvas {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+</style>
