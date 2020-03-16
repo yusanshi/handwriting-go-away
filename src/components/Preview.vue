@@ -28,11 +28,13 @@
             />
           </g>
         </svg>
-        <b-alert show variant="light">{{
-          $t('random-prompt')[
-            Math.floor(Math.random() * $t('random-prompt').length)
-          ]
-        }}</b-alert>
+        <p class="text-muted my-3">
+          {{
+            $t('random-prompt')[
+              Math.floor(Math.random() * $t('random-prompt').length)
+            ]
+          }}
+        </p>
       </div>
       <!-- eslint-enable -->
     </div>
@@ -44,7 +46,7 @@
           <div></div>
           <div></div>
         </div>
-        <b-alert show variant="light">{{ loadingPrompt }}</b-alert>
+        <p class="text-muted my-3">{{ loadingPrompt }}</p>
       </div>
     </div>
     <div v-show="state === State.FINISH">

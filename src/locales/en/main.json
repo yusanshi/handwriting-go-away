@@ -119,11 +119,11 @@
     },
     {
       "question": "What if my file is a Word/PDF file?",
-      "answer": "Please open them and copy text manually."
+      "answer": "Please open it and copy the text manually."
     },
     {
       "question": "Why does UI lag while generating?",
-      "answer": "This website has no server side. All is done in your browser. Since customizing letter space, character horizontal or vertical offset was supported, text is rendered one by one instead of line by line, which leads to a bigger computation burden.\n\nSeems like I can't optimize it due to a limited ability."
+      "answer": "This website has no server side. All is done in your browser. Since customizing letter space, character horizontal or vertical offset was supported, text is rendered one by one instead of line by line, which leads to a bigger computation burden.\n\nSeems like I can't optimize it due to a limited ability.\n\nTip: use Firefox!"
     }
   ],
   "donate": [
