@@ -48,7 +48,7 @@
     "loading-font": "Loading font...",
     "loading-paper": "Loading paper...",
     "typesetting": "Typesetting...",
-    "generating": "Generating pages..."
+    "generating": "Generating pages... (Current page: {count})"
   },
   "alert": {
     "font-not-supported": "Font not supported!",

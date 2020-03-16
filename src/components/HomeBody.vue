@@ -116,72 +116,60 @@ export default {
         lineWidth,
       );
 
-      this.loadingPrompt = this.$t('prompt.generating');
-
-      const tasks = [];
       for (let i = 0, j = 0; i < textLines.length; i += realLineCount, j += 1) {
-        const task = new Promise((resolve) => {
-          setTimeout(async () => {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = this.currentConfig.width * 10;
-            canvas.height = this.currentConfig.height * 10;
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-            const radian = ((Math.random() - 0.5) * 2 * form.paperRotation * Math.PI) / 180;
-            ctx.rotate(radian);
-            const radianAbs = Math.abs(radian);
-            let k = canvas.height / canvas.width;
-            if (k > 1) {
-              k = 1 / k;
-            }
-            const factor = (Math.tan(radianAbs) / k + 1) * Math.cos(radianAbs);
-            ctx.scale(factor, factor);
-            ctx.translate(-canvas.width / 2, -canvas.height / 2);
-            const viewport = page.getViewport({ scale: 1 });
-            const scale = canvas.width / viewport.width;
-            const scaledViewport = page.getViewport({ scale });
+        this.loadingPrompt = this.$t('prompt.generating', { count: j + 1 });
 
-            const renderContext = {
-              canvasContext: ctx,
-              viewport: scaledViewport,
-            };
-            // eslint-disable-next-line no-await-in-loop
-            await page.render(renderContext).promise;
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = this.currentConfig.width * 10;
+        canvas.height = this.currentConfig.height * 10;
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        const radian = ((Math.random() - 0.5) * 2 * form.paperRotation * Math.PI) / 180;
+        ctx.rotate(radian);
+        const radianAbs = Math.abs(radian);
+        let k = canvas.height / canvas.width;
+        if (k > 1) {
+          k = 1 / k;
+        }
+        const factor = (Math.tan(radianAbs) / k + 1) * Math.cos(radianAbs);
+        ctx.scale(factor, factor);
+        ctx.translate(-canvas.width / 2, -canvas.height / 2);
+        const viewport = page.getViewport({ scale: 1 });
+        const scale = canvas.width / viewport.width;
+        const scaledViewport = page.getViewport({ scale });
 
-            ctx.font = fontRep;
-            ctx.fillStyle = form.textColor;
-            ctx.textBaseline = 'bottom';
-            ctx.filter = `blur(${form.blur}px) opacity(${form.opacity}%) drop-shadow(${form.shadowOffset}px ${form.shadowOffset}px ${form.shadowRadius}px ${form.shadowColor})`;
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: scaledViewport,
+        };
+        // eslint-disable-next-line no-await-in-loop
+        await page.render(renderContext).promise;
 
-            textLines
-              .slice(i, i + realLineCount)
-              .forEach((lineString, index) => {
-                ctx.fillTextExtended(
-                  lineString,
-                  (this.currentConfig.start.x
-                    + (Math.random() * form.beginningOffset) / 100)
-                    * canvas.width,
-                  (this.currentConfig.start.y + index * lineHeight)
-                    * canvas.height,
-                  form.charSpace,
-                  form.distortion,
-                  form.horizontalOffset,
-                  form.verticalOffset,
-                );
-              });
-            this.generatedCanvas[j] = canvas;
-            resolve();
-          }, 0);
+        ctx.font = fontRep;
+        ctx.fillStyle = form.textColor;
+        ctx.textBaseline = 'bottom';
+        ctx.filter = `blur(${form.blur}px) opacity(${form.opacity}%) drop-shadow(${form.shadowOffset}px ${form.shadowOffset}px ${form.shadowRadius}px ${form.shadowColor})`;
+
+        textLines.slice(i, i + realLineCount).forEach((lineString, index) => {
+          ctx.fillTextExtended(
+            lineString,
+            (this.currentConfig.start.x
+              + (Math.random() * form.beginningOffset) / 100)
+              * canvas.width,
+            (this.currentConfig.start.y + index * lineHeight) * canvas.height,
+            form.charSpace,
+            form.distortion,
+            form.horizontalOffset,
+            form.verticalOffset,
+          );
         });
-        tasks.push(task);
+        this.generatedCanvas.push(canvas);
       }
 
-      Promise.all(tasks).then(() => {
-        if (form.font === 'upload') {
-          URL.revokeObjectURL(fontUrl);
-        }
-        this.state = State.FINISH;
-      });
+      if (form.font === 'upload') {
+        URL.revokeObjectURL(fontUrl);
+      }
+      this.state = State.FINISH;
     },
 
     download() {
