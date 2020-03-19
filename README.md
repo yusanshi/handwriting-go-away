@@ -1,8 +1,10 @@
 # Handwriting Go Away
 
-Handwriting text generator. https://yusanshi.com/handwriting-go-away/
+Handwriting text generator. https://handwritinggoaway.com/
 
 ## Get started
+
+First download fonts into `public/fonts/`, modify value of `font` in `src/locales/[LOCALE]/main.json` accordingly.
 
 ```
 npm install
