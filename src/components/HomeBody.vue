@@ -228,7 +228,21 @@ export default {
         ctx.scale(scaleFactor, scaleFactor);
         ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
-        ctx.drawImage(loadedImg, 0, 0, canvas.width, canvas.height);
+        if (!form.paper.hasLine && form.paper.direction === 'horizontal') {
+          ctx.translate(canvas.width / 2, canvas.height / 2);
+          ctx.rotate((90 * Math.PI) / 180);
+          ctx.drawImage(
+            loadedImg,
+            -canvas.height / 2,
+            -canvas.width / 2,
+            canvas.height,
+            canvas.width
+          );
+          ctx.rotate((-90 * Math.PI) / 180);
+          ctx.translate(-canvas.width / 2, -canvas.height / 2);
+        } else {
+          ctx.drawImage(loadedImg, 0, 0, canvas.width, canvas.height);
+        }
 
         ctx.font = fontRep;
         ctx.fillStyle = form.character.color;

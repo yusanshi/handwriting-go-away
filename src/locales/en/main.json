@@ -196,7 +196,7 @@
     },
     {
       "value": "upload",
-      "text": "上传"
+      "text": "Upload"
     }
   ],
   "faq": [
@@ -206,11 +206,15 @@
     },
     {
       "question": "Which paper should I choose?",
-      "answer": "(Currently unavailable)"
+      "answer": "- **`Source`: `Photo` & `Has line`: `Yes`**: Choose a photo of lined paper provided by us, then specify the size.\n- **`Source`: `Photo` & `Has line`: `No`**: Choose a photo of no-line paper provided by us, then specify the size, direction, line count and margin.\n- **`Source`: `Original file`**: You need to specify whether with lines or not, size, direction, line count, margin and backgound color.\n- **`Source`: `Upload`**: Upload an image of a paper, then specify the size, direction, line count and margin."
+    },
+    {
+      "question": "How to upload custom paper?",
+      "answer": "Custom paper will be available if you have chosen `Upload` in `Paper`-`Source` section. You should upload an image (png, jpg, bmp...). You may also need to adjust the margin to make it fit your paper."
     },
     {
       "question": "How to upload custom font?",
-      "answer": "Custom font will be available if you have chosen `Upload a font` in `Font` section. Common font formats are supported (ttf, otf...)."
+      "answer": "Custom font will be available if you have chosen `Upload` in `Character`-`Font` section. Common font formats are supported (ttf, otf...)."
     },
     {
       "question": "Are formulas supported?",
