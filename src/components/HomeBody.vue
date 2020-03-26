@@ -131,9 +131,9 @@ export default {
       }
 
       this.loadingPrompt = this.$t('prompt.loadingPaper');
-      let loadedImg;
+      let imgLoaded;
       try {
-        loadedImg = await new Promise((resolve, reject) => {
+        imgLoaded = await new Promise((resolve, reject) => {
           const img = new Image();
           img.onload = () => {
             resolve(img);
@@ -232,7 +232,7 @@ export default {
           ctx.translate(canvas.width / 2, canvas.height / 2);
           ctx.rotate((90 * Math.PI) / 180);
           ctx.drawImage(
-            loadedImg,
+            imgLoaded,
             -canvas.height / 2,
             -canvas.width / 2,
             canvas.height,
@@ -241,7 +241,7 @@ export default {
           ctx.rotate((-90 * Math.PI) / 180);
           ctx.translate(-canvas.width / 2, -canvas.height / 2);
         } else {
-          ctx.drawImage(loadedImg, 0, 0, canvas.width, canvas.height);
+          ctx.drawImage(imgLoaded, 0, 0, canvas.width, canvas.height);
         }
 
         ctx.font = fontRep;
@@ -302,7 +302,11 @@ export default {
             : paperSize[this.pageConfigForDownload.size].width
         );
       });
-      pdf.save(`download-${new Date().toISOString().slice(0, 10)}.pdf`);
+      pdf.save(
+        `download-${new Date()
+          .toLocaleString()
+          .replace(/[^a-zA-Z0-9]+/g, '-')}.pdf`
+      );
     }
   }
 };

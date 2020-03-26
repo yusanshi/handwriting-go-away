@@ -65,6 +65,7 @@
   "inDeveloping": "still in developing",
   "randomPrompt": [
     "Wait patiently as it takes some time to download font files.",
+    "Custom papers are supported (png, jpg, bmp...).",
     "Custom fonts are supported (ttf, otf...).",
     "Don't let me write by hand, I'd rather sleep.",
     "Have you found that the text here is changing every time page reloading?"
