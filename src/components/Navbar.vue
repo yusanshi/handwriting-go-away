@@ -1,7 +1,7 @@
 <template>
   <b-navbar toggleable="sm" type="dark" variant="dark">
     <b-container fluid>
-      <b-navbar-brand to="/">{{ $t('base-title') }}</b-navbar-brand>
+      <b-navbar-brand to="/">{{ $t('baseTitle') }}</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -15,7 +15,7 @@
               v-for="lang in $i18n.availableLocales"
               :key="lang"
               @click="setLang(lang)"
-              >{{ $t('lang-name', lang) }}</b-dropdown-item
+              >{{ $t('langName', lang) }}</b-dropdown-item
             >
           </b-nav-item-dropdown>
         </b-navbar-nav>

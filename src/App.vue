@@ -9,7 +9,7 @@ export default {
   name: 'App',
   metaInfo() {
     return {
-      titleTemplate: `%s - ${this.$t('base-title')}`,
+      titleTemplate: `%s - ${this.$t('baseTitle')}`,
     };
   },
 };

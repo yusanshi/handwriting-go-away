@@ -1,75 +1,174 @@
 {
-  "lang-name": "中文",
-  "base-title": "手写滚粗",
+  "langName": "中文",
+  "baseTitle": "手写滚粗",
   "nav": {
     "home": "首页",
     "faq": "常见问题",
     "about": "关于"
   },
   "tab": {
-    "general": "基本设置",
+    "paper": "纸张",
+    "character": "文字",
     "simulation": "“仿真”"
   },
   "language": "语言",
-  "label": {
-    "paper": "纸张",
-    "line-count": "行数",
-    "scale": "文本缩放",
-    "color": "文本颜色",
-    "char-space": "字间距",
-    "font": "字体",
-    "upload-font": "上传字体",
-    "shadow-offset": "文本阴影偏移",
-    "shadow-radius": "文本阴影半径",
-    "shadow-color": "文本阴影颜色",
-    "blur": "文本模糊半径",
-    "opacity": "文本不透明度",
-    "rotation": "纸张最大随机旋转角度",
-    "beginning-offset": "行起始随机偏移",
-    "distortion": "文字扭曲",
-    "horizontal-offset": "文字水平随机偏移",
-    "vertical-offset": "文字竖直随机偏移"
+  "form": {
+    "paper": {
+      "source": "来源",
+      "hasLine": "是否有线",
+      "paper": "纸张",
+      "upload": "上传",
+      "size": "尺寸",
+      "direction": "方向",
+      "lineCount": "行数",
+      "margin": "边距",
+      "marginDescription": "格式：上 右 下 左，单位：%",
+      "backgroundColor": "背景颜色"
+    },
+    "character": {
+      "font": "字体",
+      "upload": "上传",
+      "scale": "缩放",
+      "color": "颜色",
+      "spacing": "间距"
+    },
+    "simulation": {
+      "textEffect": {
+        "shadow": {
+          "color": "文本阴影颜色",
+          "offset": {
+            "horizontal": "文本阴影水平偏移",
+            "vertical": "文本阴影竖直偏移"
+          },
+          "radius": "文本阴影半径"
+        },
+        "blurRadius": "文本模糊半径",
+        "opacity": "文本不透明度",
+        "distortion": "文字扭曲"
+      },
+      "randomOffset": {
+        "lineBeginning": "行起始随机偏移",
+        "horizontal": "文字水平随机偏移",
+        "vertical": "文字竖直随机偏移"
+      },
+      "paperRotation": "纸张最大随机旋转角度"
+    }
   },
   "placeholder": {
-    "input-here": "在这里输入文本",
-    "choose-font": "选择或拖过来一个字体文件",
-    "drop-font-here": "拖到这里"
+    "inputHere": "在这里输入文本，留空可快速预览纸张。",
+    "chooseFont": "选择或拖过来字体文件",
+    "choosePaper": "选择或拖过来纸张图片",
+    "dropHere": "拖到这里"
   },
   "generate": "生成",
-  "download-pdf": "下载 PDF",
-  "in-developing": "正在开发",
-  "random-prompt": [
+  "downloadPdf": "下载 PDF",
+  "inDeveloping": "正在开发",
+  "randomPrompt": [
     "第一次使用需要从服务器下载字体，请耐心等待。",
     "支持上传字体（ttf, otf...）。",
     "有抄写的空，不如睡觉。",
     "你有没有发现这里的文字每次都不一样呢？"
   ],
   "prompt": {
-    "loading-font": "加载字体...",
-    "loading-paper": "加载纸张...",
+    "loadingFont": "加载字体...",
+    "loadingPaper": "加载纸张...",
     "typesetting": "排版...",
     "generating": "生成页面...（当前页面：{count}）"
   },
   "alert": {
-    "font-not-supported": "不支持该字体！",
-    "no-text-input": "请输入文本！",
-    "no-font-uploaded": "没有上传字体！",
-    "not-a-font-file": "不是字体文件！"
+    "fontNotSupported": "不支持该字体！",
+    "noFontUploaded": "没有上传字体！",
+    "noPaperUploaded": "没有上传纸张！",
+    "wrongMarginFormat": "边距格式不正确！",
+    "notAFontFile": "不是字体文件！",
+    "wrongPaperFile": "错误的纸张图片！"
   },
-  "paper": [
-    {
-      "value": "A5-photo-line-vertical",
-      "text": "A5 照片 带线 竖直"
-    },
-    {
-      "value": "A4-source-line-vertical",
-      "text": "A4 原图 带线 竖直"
-    },
-    {
-      "value": "A4-source-noline-vertical",
-      "text": "A4 原图 无线 竖直"
-    }
-  ],
+  "paper": {
+    "source": [
+      {
+        "value": "photo",
+        "text": "照片"
+      },
+      {
+        "value": "origin",
+        "text": "源文件"
+      },
+      {
+        "value": "upload",
+        "text": "上传"
+      }
+    ],
+    "hasLine": [
+      {
+        "value": true,
+        "text": "是"
+      },
+      {
+        "value": false,
+        "text": "否"
+      }
+    ],
+    "line": [
+      {
+        "value": "notebook.jpg",
+        "text": "笔记纸"
+      },
+      {
+        "value": "USTC.jpg",
+        "text": "科大稿纸（暂不可用）"
+      }
+    ],
+    "noline": [
+      {
+        "value": "plain.jpg",
+        "text": "普通纸"
+      }
+    ],
+    "size": [
+      {
+        "value": "a3",
+        "text": "A3 (297 × 420 mm)"
+      },
+      {
+        "value": "a4",
+        "text": "A4 (210 × 297 mm)"
+      },
+      {
+        "value": "a5",
+        "text": "A5 (148 × 210 mm)"
+      },
+      {
+        "value": "a6",
+        "text": "A6 (105 × 148 mm)"
+      },
+      {
+        "value": "b3",
+        "text": "B3 (353 × 500 mm)"
+      },
+      {
+        "value": "b4",
+        "text": "B4 (250 × 353 mm)"
+      },
+      {
+        "value": "b5",
+        "text": "B5 (176 × 250 mm)"
+      },
+      {
+        "value": "b6",
+        "text": "B6 (125 × 176 mm)"
+      }
+    ],
+    "direction": [
+      {
+        "value": "vertical",
+        "text": "竖直"
+      },
+      {
+        "value": "horizontal",
+        "text": "水平"
+      }
+    ]
+  },
   "font": [
     {
       "value": "FZZJ-WXCZTJW.TTF",
@@ -97,7 +196,7 @@
     },
     {
       "value": "upload",
-      "text": "上传字体"
+      "text": "上传"
     }
   ],
   "faq": [
@@ -107,7 +206,7 @@
     },
     {
       "question": "如何选择纸张？",
-      "answer": "含有 `照片` 的选项，表示那个纸张是拍照得到的，适合直接导出 PDF 交工；含有 `原图` 的选项，表示那个纸张是纯白背景的原图，适合生成 PDF 后再打印出来。\n\n若选择 `无线` 的纸张，你需要指定行数。\n\n暂不支持自定义纸张边距，后续会增加各类纸张。"
+      "answer": "- `来源`：`照片` & `是否有线`：`是`：在网站预设的有线照片中选择一张，再指定尺寸；\n- `来源`：`照片` & `是否有线`：`否`：在网站预设的无线照片中选择一张，再指定尺寸、方向、行数、边距；\n- `来源`：`源文件`：你需要指定是否有线、尺寸、方向、行数、边距、背景颜色；\n- `来源`：`上传`：上传一张纸张的照片，然后指定尺寸、方向、行数、边距。"
     },
     {
       "question": "怎么上传字体，哪里可以下载字体？",

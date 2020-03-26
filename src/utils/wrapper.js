@@ -79,7 +79,7 @@ CanvasRenderingContext2D.prototype.typesetText = function typesetText(text, char
       consumed + lineConsumed < text.length
       && (lineConsumed === 0 || (lineConsumed !== 0 && text[consumed + lineConsumed - 1] !== '\n'))
       && ctx.measureTextExtended(text.slice(consumed, consumed + lineConsumed + 1), charSpace).width
-        <= lineWidth * canvas.width
+        <= (lineWidth / 100) * canvas.width
     ) {
       lineConsumed += 1;
     }

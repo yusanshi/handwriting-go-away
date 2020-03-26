@@ -3,7 +3,7 @@
     <hr />
     <p class="text-muted" style="font-size: 0.875em;">
       <span class="mr-3">
-        {{ new Date().getFullYear() }} {{ $t('base-title') }}</span
+        {{ new Date().getFullYear() }} {{ $t('baseTitle') }}</span
       >
       <span>
         <a

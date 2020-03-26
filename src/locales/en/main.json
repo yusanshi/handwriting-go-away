@@ -1,75 +1,174 @@
 {
-  "lang-name": "English",
-  "base-title": "Handwriting Go Away",
+  "langName": "English",
+  "baseTitle": "Handwriting Go Away",
   "nav": {
     "home": "Home",
     "faq": "FAQ",
     "about": "About"
   },
   "tab": {
-    "general": "General Settings",
-    "simulation": "Realistic Simulation"
+    "paper": "Paper",
+    "character": "Character",
+    "simulation": "Simulation"
   },
   "language": "Language",
-  "label": {
-    "paper": "Paper",
-    "line-count": "Line count",
-    "scale": "Text scale",
-    "color": "Text color",
-    "char-space": "Letter space",
-    "font": "Font",
-    "upload-font": "Upload a font",
-    "shadow-offset": "Text shadow offset",
-    "shadow-radius": "Text shadow radius",
-    "shadow-color": "Text shadow color",
-    "blur": "Text blur",
-    "opacity": "Text opacity",
-    "rotation": "Paper max random rotation angle",
-    "beginning-offset": "Line beginning random offset",
-    "distortion": "Character distortion",
-    "horizontal-offset": "Character horizontal random offset",
-    "vertical-offset": "Character vertical random offset"
+  "form": {
+    "paper": {
+      "source": "Source",
+      "hasLine": "Has line",
+      "paper": "Paper",
+      "upload": "Upload",
+      "size": "Size",
+      "direction": "Direction",
+      "lineCount": "Line count",
+      "margin": "margin",
+      "marginDescription": "Format: top right bottom left, unit: %",
+      "backgroundColor": "Background color"
+    },
+    "character": {
+      "font": "Font",
+      "upload": "Upload",
+      "scale": "Scale",
+      "color": "Color",
+      "spacing": "Spacing"
+    },
+    "simulation": {
+      "textEffect": {
+        "shadow": {
+          "color": "Text shadow color",
+          "offset": {
+            "horizontal": "Text shadow horizontal offset",
+            "vertical": "Text shadow vertical offset"
+          },
+          "radius": "Text shadow radius"
+        },
+        "blurRadius": "Text blur radius",
+        "opacity": "Text opacity",
+        "distortion": "Text distortion"
+      },
+      "randomOffset": {
+        "lineBeginning": "Line beginning random offset",
+        "horizontal": "Character horizontal random offset",
+        "vertical": "Character vertical random offset"
+      },
+      "paperRotation": "Paper max random rotation angle"
+    }
   },
   "placeholder": {
-    "input-here": "Input text here",
-    "choose-font": "Choose a font file or drop it here",
-    "drop-font-here": "Drop it here"
+    "inputHere": "Input text here, leave it empty to preview the paper quickly.",
+    "chooseFont": "Choose a font file or drop it here",
+    "choosePaper": "Choose a paper image or drop it here",
+    "dropHere": "Drop it here"
   },
   "generate": "Generate",
-  "download-pdf": "Download PDF",
-  "in-developing": "still in developing",
-  "random-prompt": [
+  "downloadPdf": "Download PDF",
+  "inDeveloping": "still in developing",
+  "randomPrompt": [
     "Wait patiently as it takes some time to download font files.",
     "Custom fonts are supported (ttf, otf...).",
     "Don't let me write by hand, I'd rather sleep.",
     "Have you found that the text here is changing every time page reloading?"
   ],
   "prompt": {
-    "loading-font": "Loading font...",
-    "loading-paper": "Loading paper...",
+    "loadingFont": "Loading font...",
+    "loadingPaper": "Loading paper...",
     "typesetting": "Typesetting...",
     "generating": "Generating pages... (Current page: {count})"
   },
   "alert": {
-    "font-not-supported": "Font not supported!",
-    "no-text-input": "Please input the text!",
-    "no-font-uploaded": "No font uploaded!",
-    "not-a-font-file": "Not a font file!"
+    "fontNotSupported": "Font not supported!",
+    "noFontUploaded": "No font uploaded!",
+    "noPaperUploaded": "No paper uploaded!",
+    "wrongMarginFormat": "Wrong margin format!",
+    "notAFontFile": "Not a font file!",
+    "wrongPaperFile": "Wrong paper file!"
   },
-  "paper": [
-    {
-      "value": "A5-photo-line-vertical",
-      "text": "A5 Photo Lined Vertical"
-    },
-    {
-      "value": "A4-source-line-vertical",
-      "text": "A4 Source Lined Vertical"
-    },
-    {
-      "value": "A4-source-noline-vertical",
-      "text": "A4 Source Noline Vertical"
-    }
-  ],
+  "paper": {
+    "source": [
+      {
+        "value": "photo",
+        "text": "Photo"
+      },
+      {
+        "value": "origin",
+        "text": "Original file"
+      },
+      {
+        "value": "upload",
+        "text": "Upload"
+      }
+    ],
+    "hasLine": [
+      {
+        "value": true,
+        "text": "Yes"
+      },
+      {
+        "value": false,
+        "text": "No"
+      }
+    ],
+    "line": [
+      {
+        "value": "notebook.jpg",
+        "text": "Notebook paper"
+      },
+      {
+        "value": "USTC.jpg",
+        "text": "USTC paper (currently unavailable)"
+      }
+    ],
+    "noline": [
+      {
+        "value": "plain.jpg",
+        "text": "Plain paper"
+      }
+    ],
+    "size": [
+      {
+        "value": "a3",
+        "text": "A3 (297 × 420 mm)"
+      },
+      {
+        "value": "a4",
+        "text": "A4 (210 × 297 mm)"
+      },
+      {
+        "value": "a5",
+        "text": "A5 (148 × 210 mm)"
+      },
+      {
+        "value": "a6",
+        "text": "A6 (105 × 148 mm)"
+      },
+      {
+        "value": "b3",
+        "text": "B3 (353 × 500 mm)"
+      },
+      {
+        "value": "b4",
+        "text": "B4 (250 × 353 mm)"
+      },
+      {
+        "value": "b5",
+        "text": "B5 (176 × 250 mm)"
+      },
+      {
+        "value": "b6",
+        "text": "B6 (125 × 176 mm)"
+      }
+    ],
+    "direction": [
+      {
+        "value": "vertical",
+        "text": "Vertical"
+      },
+      {
+        "value": "horizontal",
+        "text": "Horizontal"
+      }
+    ]
+  },
   "font": [
     {
       "value": "FZZJ-WXCZTJW.TTF",
@@ -97,7 +196,7 @@
     },
     {
       "value": "upload",
-      "text": "Upload a font"
+      "text": "上传"
     }
   ],
   "faq": [
@@ -107,7 +206,7 @@
     },
     {
       "question": "Which paper should I choose?",
-      "answer": "Options with `Photo` mean that the paper is from a photo. Using this kind of papaers, you can use generated PDF files directly. A paper with `Source` has a white background color. Choose this if you'll print the PDF file.\n\nIf a `Noline` paper is chosen, you'll need to specify the line numbers.\n\n Currently custom margin is not supported. More papers will be added in the future."
+      "answer": "(Currently unavailable)"
     },
     {
       "question": "How to upload custom font?",

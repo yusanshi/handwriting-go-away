@@ -30,8 +30,8 @@
         </svg>
         <p class="text-muted my-3">
           {{
-            $t('random-prompt')[
-              Math.floor(Math.random() * $t('random-prompt').length)
+            $t('randomPrompt')[
+              Math.floor(Math.random() * $t('randomPrompt').length)
             ]
           }}
         </p>

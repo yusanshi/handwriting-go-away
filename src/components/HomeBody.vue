@@ -17,16 +17,17 @@
 </template>
 
 <script>
-import pdfjsLib from 'pdfjs-dist';
 import jsPDF from 'jspdf';
 import Control from './Control.vue';
 import Preview from './Preview.vue';
 import State from '../utils/state';
-import paperConfig from '../../public/papers/config';
+import photoLinePaper from '../../public/papers/photos/line';
+import paperSize from '../../public/papers/size';
 import randomString from '../utils/random';
+import createSVG from '../utils/createSVG';
 import '../utils/wrapper';
-import PDFJSWorker from 'file-loader!pdfjs-dist/build/pdf.worker.min'; // eslint-disable-line
-pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJSWorker;
+
+const FACTOR = 10;
 
 export default {
   name: 'HomeBody',
@@ -37,7 +38,7 @@ export default {
       loadingPrompt: '',
       State,
       generatedCanvas: [],
-      currentConfig: null,
+      pageConfigForDownload: null,
     };
   },
   methods: {
@@ -49,132 +50,228 @@ export default {
         autoHideDelay: 1500,
       });
     },
-    async generate(form) {
-      if (form.text === '') {
-        this.customAlert(this.$t('alert.no-text-input'));
+    /* eslint-disable */
+    async generate(originalForm) {
+      const form = originalForm;
+
+      if (form.character.font === 'upload' && form.character.upload === null) {
+        this.customAlert(this.$t('alert.noFontUploaded'));
         return;
       }
-      if (form.font === 'upload' && form.uploadFont === null) {
-        this.customAlert(this.$t('alert.no-font-uploaded'));
+
+      if (form.paper.source === 'upload' && form.paper.upload === null) {
+        this.customAlert(this.$t('alert.noPaperUploaded'));
         return;
+      }
+
+      if (form.paper.source === 'photo' && form.paper.hasLine === true) {
+        form.paper.direction = photoLinePaper[form.paper.paper].direction;
+        form.paper.lineCount = photoLinePaper[form.paper.paper].lineCount;
+        form.paper.margin = photoLinePaper[form.paper.paper].margin;
+      } else {
+        const splitMargin = form.paper.marginInText.split(' ');
+        if (splitMargin.length !== 4) {
+          this.customAlert(this.$t('alert.wrongMarginFormat'));
+          return;
+        }
+        form.paper.margin = {
+          top: splitMargin[0],
+          right: splitMargin[1],
+          bottom: splitMargin[2],
+          left: splitMargin[3]
+        };
       }
 
       this.state = State.LOADING;
       this.generatedCanvas = [];
-      this.currentConfig = paperConfig[form.paper];
-      const realLineCount = form.paper.includes('noline')
-        ? form.lineCount
-        : this.currentConfig.line_count;
-      const lineWidth = this.currentConfig.end.x - this.currentConfig.start.x;
-      const lineHeight = (this.currentConfig.end.y - this.currentConfig.start.y)
-        / (realLineCount - 1);
+      const revokeList = [];
+      this.pageConfigForDownload = {
+        size: form.paper.size,
+        direction: form.paper.direction
+      };
+      const lineWidth = 100 - form.paper.margin.left - form.paper.margin.right;
+      const lineHeight =
+        (100 - form.paper.margin.top - form.paper.margin.bottom) /
+        form.paper.lineCount;
 
-      this.loadingPrompt = this.$t('prompt.loading-font');
-      let fontUrl;
-      if (form.font === 'upload') {
-        fontUrl = URL.createObjectURL(form.uploadFont);
-      } else {
-        fontUrl = `./fonts/${form.font}`;
+      let fontRep = '';
+      if (form.text !== '') {
+        this.loadingPrompt = this.$t('prompt.loadingFont');
+        let fontURL;
+        if (form.character.font === 'upload') {
+          fontURL = URL.createObjectURL(form.character.upload);
+          revokeList.push(fontURL);
+        } else {
+          fontURL = `./fonts/${form.character.font}`;
+        }
+        const fontName = randomString(6);
+
+        fontRep = `${parseInt(
+          (paperSize[form.paper.size].defaultFontSize * form.character.scale) /
+            100,
+          10
+        )}px "${fontName}"`;
+
+        try {
+          const fontLoaded = await new FontFace(
+            fontName,
+            `url("${fontURL}")`
+          ).load();
+          document.fonts.add(fontLoaded);
+        } catch (err) {
+          this.state = State.BEGIN;
+          this.customAlert(this.$t('alert.notAFontFile'));
+          return;
+        }
+        if (!document.fonts.check(fontRep)) {
+          this.state = State.BEGIN;
+          this.customAlert(this.$t('alert.fontNotSupported'));
+          return;
+        }
       }
-      const fontName = randomString(6);
 
-      const fontRep = `${parseInt(
-        (this.currentConfig.default_font_size * form.textScale) / 100,
-        10,
-      )}px "${fontName}"`;
-
+      this.loadingPrompt = this.$t('prompt.loadingPaper');
+      let loadedImg;
       try {
-        const fontLoaded = await new FontFace(
-          fontName,
-          `url("${fontUrl}")`,
-        ).load();
-        document.fonts.add(fontLoaded);
+        loadedImg = await new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            resolve(img);
+          };
+          img.onerror = reject;
+          if (form.paper.source === 'photo') {
+            img.src = `./papers/photos/${
+              form.paper.hasLine ? 'line' : 'noline'
+            }/${form.paper.paper}`;
+          } else if (form.paper.source === 'origin') {
+            const svg = createSVG(
+              form.paper.direction === 'vertical'
+                ? paperSize[form.paper.size].width
+                : paperSize[form.paper.size].height,
+              form.paper.direction === 'vertical'
+                ? paperSize[form.paper.size].height
+                : paperSize[form.paper.size].width,
+              form.paper.lineCount,
+              form.paper.margin,
+              form.paper.backgroundColor,
+              form.paper.hasLine
+            );
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            const imgURL = URL.createObjectURL(blob);
+            revokeList.push(imgURL);
+            img.src = imgURL;
+          } else if (form.paper.source === 'upload') {
+            const imgURL = URL.createObjectURL(form.paper.upload);
+            revokeList.push(imgURL);
+            img.src = imgURL;
+          }
+        });
       } catch (err) {
         this.state = State.BEGIN;
-        this.customAlert(this.$t('alert.not-a-font-file'));
+        this.customAlert(this.$t('alert.wrongPaperFile'));
         return;
       }
-      if (!document.fonts.check(fontRep)) {
-        this.state = State.BEGIN;
-        this.customAlert(this.$t('alert.font-not-supported'));
-        return;
-      }
-
-      this.loadingPrompt = this.$t('prompt.loading-paper');
-      const loadingTask = pdfjsLib.getDocument(`./papers/${form.paper}.pdf`);
-      const page = await loadingTask.promise.then((pdf) => pdf.getPage(1));
 
       this.loadingPrompt = this.$t('prompt.typesetting');
       const tempCanvas = document.createElement('canvas');
       const tempCtx = tempCanvas.getContext('2d');
-      tempCanvas.width = this.currentConfig.width * 10;
-      tempCanvas.height = this.currentConfig.height * 10;
+
+      tempCanvas.width =
+        form.paper.direction === 'vertical'
+          ? paperSize[form.paper.size].width * FACTOR
+          : paperSize[form.paper.size].height * FACTOR;
+      tempCanvas.height =
+        form.paper.direction === 'vertical'
+          ? paperSize[form.paper.size].height * FACTOR
+          : paperSize[form.paper.size].width * FACTOR;
+
       tempCtx.font = fontRep;
       const textLines = tempCtx.typesetText(
-        form.text,
-        form.charSpace,
-        lineWidth,
+        // Draw canvas even with empty text,
+        // in order to preview paper with empty text
+        form.text === '' ? ' ' : form.text,
+        form.character.spacing,
+        lineWidth
       );
 
-      for (let i = 0, j = 0; i < textLines.length; i += realLineCount, j += 1) {
+      for (
+        let i = 0, j = 0;
+        i < textLines.length;
+        i += form.paper.lineCount, j += 1
+      ) {
         this.loadingPrompt = this.$t('prompt.generating', { count: j + 1 });
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = this.currentConfig.width * 10;
-        canvas.height = this.currentConfig.height * 10;
+        canvas.width =
+          form.paper.direction === 'vertical'
+            ? paperSize[form.paper.size].width * FACTOR
+            : paperSize[form.paper.size].height * FACTOR;
+        canvas.height =
+          form.paper.direction === 'vertical'
+            ? paperSize[form.paper.size].height * FACTOR
+            : paperSize[form.paper.size].width * FACTOR;
         ctx.translate(canvas.width / 2, canvas.height / 2);
-        const radian = ((Math.random() - 0.5) * 2 * form.paperRotation * Math.PI) / 180;
+        const radian =
+          ((Math.random() - 0.5) *
+            2 *
+            form.simulation.paperRotation *
+            Math.PI) /
+          180;
         ctx.rotate(radian);
         const radianAbs = Math.abs(radian);
         let k = canvas.height / canvas.width;
         if (k > 1) {
           k = 1 / k;
         }
-        const factor = (Math.tan(radianAbs) / k + 1) * Math.cos(radianAbs);
-        ctx.scale(factor, factor);
+        const scaleFactor = (Math.tan(radianAbs) / k + 1) * Math.cos(radianAbs);
+        ctx.scale(scaleFactor, scaleFactor);
         ctx.translate(-canvas.width / 2, -canvas.height / 2);
-        const viewport = page.getViewport({ scale: 1 });
-        const scale = canvas.width / viewport.width;
-        const scaledViewport = page.getViewport({ scale });
 
-        const renderContext = {
-          canvasContext: ctx,
-          viewport: scaledViewport,
-        };
-        // eslint-disable-next-line no-await-in-loop
-        await page.render(renderContext).promise;
+        ctx.drawImage(loadedImg, 0, 0, canvas.width, canvas.height);
 
         ctx.font = fontRep;
-        ctx.fillStyle = form.textColor;
+        ctx.fillStyle = form.character.color;
         ctx.textBaseline = 'bottom';
-        ctx.filter = `blur(${form.blur}px) opacity(${form.opacity}%) drop-shadow(${form.shadowOffset}px ${form.shadowOffset}px ${form.shadowRadius}px ${form.shadowColor})`;
-
-        textLines.slice(i, i + realLineCount).forEach((lineString, index) => {
-          ctx.fillTextExtended(
-            lineString,
-            (this.currentConfig.start.x
-              + (Math.random() * form.beginningOffset) / 100)
-              * canvas.width,
-            (this.currentConfig.start.y + index * lineHeight) * canvas.height,
-            form.charSpace,
-            form.distortion,
-            form.horizontalOffset,
-            form.verticalOffset,
-          );
-        });
+        const { textEffect } = form.simulation;
+        ctx.filter = `blur(${textEffect.blurRadius}px) opacity(${textEffect.opacity}%) drop-shadow(${textEffect.shadow.offset.horizontal}px ${textEffect.shadow.offset.vertical}px ${textEffect.shadow.radius}px ${textEffect.shadow.color})`;
+        textLines
+          .slice(i, i + form.paper.lineCount)
+          .forEach((lineString, index) => {
+            ctx.fillTextExtended(
+              lineString,
+              ((+form.paper.margin.left +
+                (Math.random() - 0.5) *
+                  2 *
+                  +form.simulation.randomOffset.lineBeginning) /
+                100) *
+                canvas.width,
+              ((+form.paper.margin.top + lineHeight * (index + 1)) / 100) *
+                canvas.height,
+              form.character.spacing,
+              form.simulation.distortion,
+              form.simulation.randomOffset.horizontal,
+              form.simulation.randomOffset.vertical
+            );
+          });
         this.generatedCanvas.push(canvas);
       }
 
-      if (form.font === 'upload') {
-        URL.revokeObjectURL(fontUrl);
-      }
+      revokeList.forEach(e => {
+        URL.revokeObjectURL(e);
+      });
       this.state = State.FINISH;
     },
 
     download() {
       // eslint-disable-next-line new-cap
-      const pdf = new jsPDF({ format: this.currentConfig.target_foramt });
+      const pdf = new jsPDF({
+        format: this.pageConfigForDownload.size,
+        orientation:
+          this.pageConfigForDownload.direction === 'vertical'
+            ? 'portrait'
+            : 'landscape'
+      });
       this.generatedCanvas.forEach((canvas, index) => {
         if (index !== 0) {
           pdf.addPage();
@@ -183,12 +280,16 @@ export default {
           canvas,
           0,
           0,
-          this.currentConfig.width,
-          this.currentConfig.height,
+          this.pageConfigForDownload.direction === 'vertical'
+            ? paperSize[this.pageConfigForDownload.size].width
+            : paperSize[this.pageConfigForDownload.size].height,
+          this.pageConfigForDownload.direction === 'vertical'
+            ? paperSize[this.pageConfigForDownload.size].height
+            : paperSize[this.pageConfigForDownload.size].width
         );
       });
-      pdf.save('download.pdf');
-    },
-  },
+      pdf.save(`download-${new Date().toISOString().slice(0, 10)}.pdf`);
+    }
+  }
 };
 </script>
