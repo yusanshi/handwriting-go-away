@@ -334,8 +334,10 @@
   </b-form>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
   name: 'Control',
   data() {
     return {
@@ -344,16 +346,18 @@ export default {
         paper: {
           source: 'photo',
           hasLine: true,
-          paper: null,
+          paper: '',
           upload: null,
-          size: this.$t('paper.size')[1].value,
-          direction: this.$t('paper.direction')[0].value,
+          size: (this.$t('paper.size') as unknown as formSelectData)[1].value,
+          direction: (this.$t(
+            'paper.direction',
+          ) as unknown as formSelectData)[0].value,
           lineCount: 22,
           marginInText: '10 10 10 10',
           backgroundColor: '#fafafa',
         },
         character: {
-          font: this.$t('font')[0].value,
+          font: (this.$t('font') as unknown as formSelectData)[0].value,
           upload: null,
           scale: 100,
           color: '#000000',
@@ -371,7 +375,7 @@ export default {
             },
             blurRadius: 1.0,
             opacity: 85,
-            distortion: this.$t('inDeveloping'),
+            distortion: this.$t('inDeveloping') as unknown as number,
           },
           randomOffset: {
             lineBeginning: 1.6,
@@ -380,14 +384,14 @@ export default {
           },
           paperRotation: 1.5,
         },
-      },
+      } as formType,
     };
   },
   methods: {
-    updatePaperPaper() {
+    updatePaperPaper(): void {
       this.form.paper.paper = this.form.paper.hasLine
-        ? this.$t('paper.line')[0].value
-        : this.$t('paper.noline')[0].value;
+        ? (this.$t('paper.line') as unknown as formSelectData)[0].value
+        : (this.$t('paper.noline') as unknown as formSelectData)[0].value;
     },
   },
   props: {
@@ -399,5 +403,5 @@ export default {
   watch: {
     'form.paper.hasLine': 'updatePaperPaper',
   },
-};
+});
 </script>

@@ -55,15 +55,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import State from '../utils/state';
 
-export default {
+export default Vue.extend({
   name: 'Preview',
   props: {
     state: Symbol,
     loadingPrompt: String,
-    allCanvas: Array,
+    allCanvas: Array as () => HTMLCanvasElement[],
   },
   data() {
     return {
@@ -71,14 +72,14 @@ export default {
     };
   },
   watch: {
-    state(val) {
+    state(val: symbol) {
       if (val === State.FINISH) {
-        document.querySelector('#preview').innerHTML = '';
-        document.querySelector('#preview').append(...this.allCanvas);
+        document.querySelector('#preview')!.innerHTML = '';
+        document.querySelector('#preview')!.append(...this.allCanvas);
       }
     },
   },
-};
+});
 </script>
 
 <style>

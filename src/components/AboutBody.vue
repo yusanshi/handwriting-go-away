@@ -4,11 +4,12 @@
   </b-card>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import marked from 'marked';
 import QRCode from 'qrcode';
 
-export default {
+export default Vue.extend({
   name: 'AboutBody',
   data() {
     return {
@@ -16,21 +17,21 @@ export default {
     };
   },
   computed: {
-    compiledMarkdown() {
-      return marked(
-        this.$t('about').replace('[DONATE_QRCODE]', this.donateQRCode),
-      );
+    compiledMarkdown(): string {
+      return marked((this.$t('about') as string).replace('[DONATE_QRCODE]', this.donateQRCode));
     },
   },
   methods: {
     async updateDonateQRCode() {
-      const tasks = this.$t('donate').map((item) => QRCode.toString(item.QRCode, {
-        width: 200,
-        margin: 0,
-        color: {
-          dark: '#444444ff',
-        },
-      }).then((data) => `\n\n**${item.name}**\n\n${data}\n\n`));
+      const tasks = (this.$t('donate') as unknown as { name: string; QRCode: string }[]).map(
+        (item: { name: string; QRCode: string }) => QRCode.toString(item.QRCode, {
+          width: 200,
+          margin: 0,
+          color: {
+            dark: '#444444ff',
+          },
+        }).then((data: string) => `\n\n**${item.name}**\n\n${data}\n\n`),
+      );
 
       Promise.all(tasks)
         .then((values) => {
@@ -47,5 +48,5 @@ export default {
   watch: {
     '$i18n.locale': 'updateDonateQRCode',
   },
-};
+});
 </script>

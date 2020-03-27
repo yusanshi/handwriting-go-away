@@ -4,13 +4,15 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
   name: 'App',
-  metaInfo() {
+  metaInfo(): { titleTemplate: string } {
     return {
-      titleTemplate: `%s - ${this.$t('baseTitle')}`,
+      titleTemplate: `%s - ${this.$t('baseTitle')}` as string,
     };
   },
-};
+});
 </script>

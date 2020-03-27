@@ -24,14 +24,16 @@
   </b-navbar>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
   name: 'Navbar',
   methods: {
-    setLang(lang) {
+    setLang(lang: string): void {
       this.$i18n.locale = lang;
       localStorage.setItem('lang', lang);
     },
   },
-};
+});
 </script>

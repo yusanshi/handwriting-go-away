@@ -40,7 +40,7 @@ CanvasRenderingContext2D.prototype.fillTextExtended = function fillTextExtended(
 /**
  *  Measure text width based on charSpace
  * @param {string} text Text to measure
- * @param {charSpace} number Proportion of canvas.width (%), can be negative or postive
+ * @param {number} charSpace Proportion of canvas.width (%), can be negative or postive
  * @return {{width: null}} Can be used as X.width like a TextMetrics object,
  * but no other properties
  */

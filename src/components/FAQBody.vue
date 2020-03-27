@@ -11,15 +11,17 @@
   </div>
 </template>
 
-<script>
+
+<script lang="ts">
+import Vue from 'vue';
 import marked from 'marked';
 
-export default {
+export default Vue.extend({
   name: 'HomeBody',
   methods: {
-    compiledMarkdown(text) {
+    compiledMarkdown(text: string): string {
       return marked(text);
     },
   },
-};
+});
 </script>

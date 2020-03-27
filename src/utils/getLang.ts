@@ -1,6 +1,6 @@
-export default (availableLangs) => {
+export default (availableLangs:string[]) => {
   let locales = (navigator.languages) ? navigator.languages : [];
-  locales = [...locales, navigator.language, navigator.userLanguage, navigator.browserLanguage];
+  locales = [...locales, navigator.language];
   const languages = locales.map((lang) => {
     try {
       return lang.slice(0, 2);
