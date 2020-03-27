@@ -50,7 +50,6 @@ export default {
         autoHideDelay: 1500,
       });
     },
-    /* eslint-disable */
     async generate(originalForm) {
       const form = originalForm;
 
@@ -78,7 +77,7 @@ export default {
           top: splitMargin[0],
           right: splitMargin[1],
           bottom: splitMargin[2],
-          left: splitMargin[3]
+          left: splitMargin[3],
         };
       }
 
@@ -87,12 +86,11 @@ export default {
       const revokeList = [];
       this.pageConfigForDownload = {
         size: form.paper.size,
-        direction: form.paper.direction
+        direction: form.paper.direction,
       };
       const lineWidth = 100 - form.paper.margin.left - form.paper.margin.right;
-      const lineHeight =
-        (100 - form.paper.margin.top - form.paper.margin.bottom) /
-        form.paper.lineCount;
+      const lineHeight = (100 - form.paper.margin.top - form.paper.margin.bottom)
+        / form.paper.lineCount;
 
       let fontRep = '';
       if (form.text !== '') {
@@ -107,15 +105,15 @@ export default {
         const fontName = randomString(6);
 
         fontRep = `${parseInt(
-          (paperSize[form.paper.size].defaultFontSize * form.character.scale) /
-            100,
-          10
+          (paperSize[form.paper.size].defaultFontSize * form.character.scale)
+            / 100,
+          10,
         )}px "${fontName}"`;
 
         try {
           const fontLoaded = await new FontFace(
             fontName,
-            `url("${fontURL}")`
+            `url("${fontURL}")`,
           ).load();
           document.fonts.add(fontLoaded);
         } catch (err) {
@@ -154,7 +152,7 @@ export default {
               form.paper.lineCount,
               form.paper.margin,
               form.paper.backgroundColor,
-              form.paper.hasLine
+              form.paper.hasLine,
             );
             const blob = new Blob([svg], { type: 'image/svg+xml' });
             const imgURL = URL.createObjectURL(blob);
@@ -176,14 +174,12 @@ export default {
       const tempCanvas = document.createElement('canvas');
       const tempCtx = tempCanvas.getContext('2d');
 
-      tempCanvas.width =
-        form.paper.direction === 'vertical'
-          ? paperSize[form.paper.size].width * FACTOR
-          : paperSize[form.paper.size].height * FACTOR;
-      tempCanvas.height =
-        form.paper.direction === 'vertical'
-          ? paperSize[form.paper.size].height * FACTOR
-          : paperSize[form.paper.size].width * FACTOR;
+      tempCanvas.width = form.paper.direction === 'vertical'
+        ? paperSize[form.paper.size].width * FACTOR
+        : paperSize[form.paper.size].height * FACTOR;
+      tempCanvas.height = form.paper.direction === 'vertical'
+        ? paperSize[form.paper.size].height * FACTOR
+        : paperSize[form.paper.size].width * FACTOR;
 
       tempCtx.font = fontRep;
       const textLines = tempCtx.typesetText(
@@ -191,7 +187,7 @@ export default {
         // in order to preview paper with empty text
         form.text === '' ? ' ' : form.text,
         form.character.spacing,
-        lineWidth
+        lineWidth,
       );
 
       for (
@@ -203,21 +199,18 @@ export default {
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width =
-          form.paper.direction === 'vertical'
-            ? paperSize[form.paper.size].width * FACTOR
-            : paperSize[form.paper.size].height * FACTOR;
-        canvas.height =
-          form.paper.direction === 'vertical'
-            ? paperSize[form.paper.size].height * FACTOR
-            : paperSize[form.paper.size].width * FACTOR;
+        canvas.width = form.paper.direction === 'vertical'
+          ? paperSize[form.paper.size].width * FACTOR
+          : paperSize[form.paper.size].height * FACTOR;
+        canvas.height = form.paper.direction === 'vertical'
+          ? paperSize[form.paper.size].height * FACTOR
+          : paperSize[form.paper.size].width * FACTOR;
         ctx.translate(canvas.width / 2, canvas.height / 2);
-        const radian =
-          ((Math.random() - 0.5) *
-            2 *
-            form.simulation.paperRotation *
-            Math.PI) /
-          180;
+        const radian = ((Math.random() - 0.5)
+            * 2
+            * form.simulation.paperRotation
+            * Math.PI)
+          / 180;
         ctx.rotate(radian);
         const radianAbs = Math.abs(radian);
         let k = canvas.height / canvas.width;
@@ -236,7 +229,7 @@ export default {
             -canvas.height / 2,
             -canvas.width / 2,
             canvas.height,
-            canvas.width
+            canvas.width,
           );
           ctx.rotate((-90 * Math.PI) / 180);
           ctx.translate(-canvas.width / 2, -canvas.height / 2);
@@ -249,29 +242,35 @@ export default {
         ctx.textBaseline = 'bottom';
         const { textEffect } = form.simulation;
         ctx.filter = `blur(${textEffect.blurRadius}px) opacity(${textEffect.opacity}%) drop-shadow(${textEffect.shadow.offset.horizontal}px ${textEffect.shadow.offset.vertical}px ${textEffect.shadow.radius}px ${textEffect.shadow.color})`;
-        textLines
-          .slice(i, i + form.paper.lineCount)
-          .forEach((lineString, index) => {
-            ctx.fillTextExtended(
-              lineString,
-              ((+form.paper.margin.left +
-                (Math.random() - 0.5) *
-                  2 *
-                  +form.simulation.randomOffset.lineBeginning) /
-                100) *
-                canvas.width,
-              ((+form.paper.margin.top + lineHeight * (index + 1)) / 100) *
-                canvas.height,
-              form.character.spacing,
-              form.simulation.distortion,
-              form.simulation.randomOffset.horizontal,
-              form.simulation.randomOffset.vertical
-            );
-          });
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            textLines
+              .slice(i, i + form.paper.lineCount)
+              .forEach((lineString, index) => {
+                ctx.fillTextExtended(
+                  lineString,
+                  ((+form.paper.margin.left
+                    + (Math.random() - 0.5)
+                      * 2
+                      * +form.simulation.randomOffset.lineBeginning)
+                    / 100)
+                    * canvas.width,
+                  ((+form.paper.margin.top + lineHeight * (index + 1)) / 100)
+                    * canvas.height,
+                  form.character.spacing,
+                  form.simulation.distortion,
+                  form.simulation.randomOffset.horizontal,
+                  form.simulation.randomOffset.vertical,
+                );
+              });
+            resolve();
+          }, 0);
+        });
         this.generatedCanvas.push(canvas);
       }
 
-      revokeList.forEach(e => {
+      revokeList.forEach((e) => {
         URL.revokeObjectURL(e);
       });
       this.state = State.FINISH;
@@ -284,7 +283,7 @@ export default {
         orientation:
           this.pageConfigForDownload.direction === 'vertical'
             ? 'portrait'
-            : 'landscape'
+            : 'landscape',
       });
       this.generatedCanvas.forEach((canvas, index) => {
         if (index !== 0) {
@@ -299,15 +298,15 @@ export default {
             : paperSize[this.pageConfigForDownload.size].height,
           this.pageConfigForDownload.direction === 'vertical'
             ? paperSize[this.pageConfigForDownload.size].height
-            : paperSize[this.pageConfigForDownload.size].width
+            : paperSize[this.pageConfigForDownload.size].width,
         );
       });
       pdf.save(
         `download-${new Date()
           .toLocaleString()
-          .replace(/[^a-zA-Z0-9]+/g, '-')}.pdf`
+          .replace(/[^a-zA-Z0-9]+/g, '-')}.pdf`,
       );
-    }
-  }
+    },
+  },
 };
 </script>
