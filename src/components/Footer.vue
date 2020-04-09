@@ -2,15 +2,16 @@
   <footer>
     <hr />
     <p class="text-muted" style="font-size: 0.875em;">
-      <span class="mr-3">
+      <span>
         {{ new Date().getFullYear() }} {{ $t('baseTitle') }}</span
       >
-      <span>
+      <span v-for="item in $i18n.t('beian')" :key=item.text class="ml-3 d-none d-sm-inline">
         <a
-          href="http://www.beian.miit.gov.cn/"
+          :href="item.link"
           target="_blank"
           class="text-reset"
-          >{{ $t('beian') }}</a
+          v-text="item.text"
+          ></a
         >
       </span>
     </p>
