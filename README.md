@@ -1,6 +1,6 @@
 # Handwriting Go Away
 
-Handwriting text generator. https://handwritinggoaway.com/
+Handwriting text generator. https://storage.yusanshi.com/handwritinggoaway/
 
 ## Get started
 
